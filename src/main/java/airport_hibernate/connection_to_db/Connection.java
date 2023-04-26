@@ -13,7 +13,7 @@ public class Connection {
         try {
             sessionFactory = configuration.buildSessionFactory();
         } catch (HibernateException e) {
-            System.out.println("Failed to Build Session Factory " + e.getMessage());
+            e.printStackTrace();
             throw new ExceptionInInitializerError(e);
         }
     }

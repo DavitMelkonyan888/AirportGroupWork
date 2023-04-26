@@ -10,6 +10,8 @@ import java.util.Scanner;
 
 public class Main {
     
+    private static SessionFactory sessionFactory;
+    
     private static void mainMenu(){
         System.out.println("Press 1  For Passengers");
         System.out.println("Press 2  For Companies");

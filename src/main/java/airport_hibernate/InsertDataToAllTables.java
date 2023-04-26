@@ -16,9 +16,8 @@ import java.sql.Timestamp;
 public class InsertDataToAllTables {
     
     private static void AddressFileImporter(String path, SessionFactory sessionFactory) {
-        Session session = sessionFactory.openSession();
         
-        try {
+        try (Session session = sessionFactory.openSession()) {
             // Open file for reading
             BufferedReader reader = new BufferedReader(new FileReader(path));
             
@@ -41,33 +40,30 @@ public class InsertDataToAllTables {
             reader.close();
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
-        } finally {
-            // Close the Hibernate session
-            session.close();
         }
+        // Close the Hibernate session
     }
     
     private static void CompanyFileImporter(String path, SessionFactory sessionFactory) {
     
         // Load Hibernate configuration
-        Session session = sessionFactory.openSession();
-    
-        try {
+        
+        try (Session session = sessionFactory.openSession()) {
             // Open file for reading
             BufferedReader reader = new BufferedReader(new FileReader(path));
-        
+            
             // Read each line of the file
             String line;
             while ((line = reader.readLine()) != null) {
                 // Split the line into fields
                 String[] fields = line.split(",");
-            
+                
                 // Create a new Company object with filled data
                 Company company = new Company();
-    
+                
                 // Set the object properties from the file fields
                 company.setName(fields[0]);
-                String foundingDate = fields[1];
+                String   foundingDate = fields[1];
                 String[] dt           = foundingDate.split("/");
                 foundingDate = dt[2] + "-" + dt[0] + "-" + dt[1];
                 company.setFoundingDate(Date.valueOf(foundingDate));
@@ -77,33 +73,30 @@ public class InsertDataToAllTables {
                 session.save(company);
                 transaction.commit();
             }
-        
+            
             // Close the file
             reader.close();
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
-        } finally {
-            // Close the Hibernate session
-            session.close();
         }
+        // Close the Hibernate session
     }
     
     private static void PassengerFileImporter(String path, SessionFactory sessionFactory) {
     
         // Load Hibernate configuration
-        Session session = sessionFactory.openSession();
-    
-        try {
+        
+        try (Session session = sessionFactory.openSession()) {
             // Open file for reading
             BufferedReader reader = new BufferedReader(new FileReader(path));
-        
+            
             // Read each line of the file
             String line;
-            int counterForAddressId = 1;
+            int    counterForAddressId = 1;
             while ((line = reader.readLine()) != null) {
                 // Split the line into fields
                 String[] fields = line.split(",");
-            
+                
                 // Create a new Passenger object with filled data
                 Passenger passenger = new Passenger(fields[0], fields[1], session.get(Address.class, counterForAddressId++));
                 
@@ -112,23 +105,20 @@ public class InsertDataToAllTables {
                 session.save(passenger);
                 transaction.commit();
             }
-        
+            
             // Close the file
             reader.close();
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
-        } finally {
-            // Close the Hibernate session
-            session.close();
         }
+        // Close the Hibernate session
     }
     
     private static void PassInTripFileImporter(String path, SessionFactory sessionFactory) {
         
         // Load Hibernate configuration
-        Session session = sessionFactory.openSession();
         
-        try {
+        try (Session session = sessionFactory.openSession()) {
             // Open file for reading
             BufferedReader reader = new BufferedReader(new FileReader(path));
             
@@ -157,18 +147,15 @@ public class InsertDataToAllTables {
             reader.close();
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
-        } finally {
-            // Close the Hibernate session
-            session.close();
         }
+        // Close the Hibernate session
     }
     
     private static void TripFileImporter(String path, SessionFactory sessionFactory) {
         
         // Load Hibernate configuration
-        Session session = sessionFactory.openSession();
         
-        try {
+        try (Session session = sessionFactory.openSession()) {
             // Open file for reading
             BufferedReader reader = new BufferedReader(new FileReader(path));
             
@@ -180,7 +167,7 @@ public class InsertDataToAllTables {
                 
                 // Create a new Trip object
                 Trip trip = new Trip();
-    
+                
                 // Set the object properties from the file fields
                 trip.setId(Integer.parseInt(fields[0]));
                 trip.setCompany(session.get(Company.class, Integer.parseInt(fields[1])));
@@ -199,10 +186,8 @@ public class InsertDataToAllTables {
             reader.close();
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
-        } finally {
-            // Close the Hibernate session
-            session.close();
         }
+        // Close the Hibernate session
     }
     
     public static void main (String[] args) {

@@ -1,11 +1,18 @@
 package airport_hibernate.service.service_classes;
 
 import airport_hibernate.pojo_classes.Trip;
+import org.hibernate.SessionFactory;
 
 import java.util.List;
 import java.util.Set;
 
 public class TripService implements airport_hibernate.service.abstract_service.Trip{
+    
+    private final SessionFactory sessionFactory;
+    
+    public TripService (SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
     
     /**
      * @param id
@@ -58,6 +65,15 @@ public class TripService implements airport_hibernate.service.abstract_service.T
     @Override
     public void delete (long id) {
     
+    }
+    
+    /**
+     * @param object
+     * @return
+     */
+    @Override
+    public String toString (Trip object) {
+        return null;
     }
     
     /**

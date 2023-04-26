@@ -19,6 +19,7 @@ public class CompanyService implements Service<Company> {
             session = sessionFactory.openSession();
         } catch(HibernateException e){
             e.printStackTrace();
+            throw new ExceptionInInitializerError(e);
         }
     }
     
