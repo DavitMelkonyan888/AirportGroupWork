@@ -1,6 +1,7 @@
 package airport_hibernate.crud;
 
 import airport_hibernate.connection_to_db.Connection;
+import airport_hibernate.pojo_classes.Company;
 import airport_hibernate.service.service_classes.CompanyService;
 import airport_hibernate.service.service_classes.PassengerService;
 import airport_hibernate.service.service_classes.TripService;
@@ -75,7 +76,9 @@ public class Main {
             System.out.println();
             switch (v) {
                 case 1:
-                    
+                    int i = getValidInt();
+                    Company company = companyService.getById(i);
+                    System.out.println(companyService.toString(company));
                     break;
                 case 2:
                     

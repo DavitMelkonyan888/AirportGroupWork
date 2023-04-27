@@ -1,5 +1,7 @@
 package airport_hibernate.service.abstract_service;
 
+import airport_hibernate.pojo_classes.Company;
+
 import java.util.Set;
 
 public interface Service <T> {
@@ -11,4 +13,9 @@ public interface Service <T> {
     public abstract void delete(long id);
     public abstract String toString(T object);
     public abstract void close();
+    public default void print(Set<T> set){
+        for(T i: set){
+            System.out.println(this.toString(i));
+        }
+    }
 }

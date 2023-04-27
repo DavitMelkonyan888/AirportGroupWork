@@ -9,21 +9,11 @@ import org.hibernate.SessionFactory;
 import java.util.List;
 import java.util.Set;
 
-public class TripService implements airport_hibernate.service.abstract_service.Trip{
-    
-    private final SessionFactory sessionFactory;
-    private final Session        session;
+public class TripService implements airport_hibernate.service.abstract_service.Trip {
     
     // Load Hibernate configuration
-    {
-        sessionFactory = Connection.getSessionFactory();
-        try{
-            session = sessionFactory.openSession();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            throw new ExceptionInInitializerError(e);
-        }
-    }
+    private final SessionFactory sessionFactory = Connection.getSessionFactory();
+    private final Session        session        = sessionFactory.openSession();
     
     /**
      * @param id

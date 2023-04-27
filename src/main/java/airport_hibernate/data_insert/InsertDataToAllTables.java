@@ -14,20 +14,9 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class InsertDataToAllTables {
-    
-    private static final SessionFactory sessionFactory;
-    private static final Session session;
-    
     // Load Hibernate configuration
-    static {
-        sessionFactory = Connection.getSessionFactory();
-        try{
-            session = sessionFactory.openSession();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            throw new ExceptionInInitializerError(e);
-        }
-    }
+    private static final SessionFactory sessionFactory = Connection.getSessionFactory();
+    private static final Session session = sessionFactory.openSession();
     
     private static void AddressFileImporter(String path) {
         try {
@@ -201,15 +190,7 @@ public class InsertDataToAllTables {
         PassInTripFileImporter("src/main/resources/datas/pass_in_trip.txt");
         
         // Close the Hibernate session
-        try {
-            session.close();
-        } catch (HibernateException e){
-            e.printStackTrace();
-        }
-        try {
-            sessionFactory.close();
-        } catch (HibernateException e){
-            e.printStackTrace();
-        }
+        session.close();
+        sessionFactory.close();
     }
 }

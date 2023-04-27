@@ -9,21 +9,11 @@ import org.hibernate.SessionFactory;
 
 import java.util.Set;
 
-public class CompanyService implements Service<Company> {
-    
-    private final SessionFactory sessionFactory;
-    private final Session        session;
+public class CompanyService implements Service <Company> {
     
     // Load Hibernate configuration
-    {
-        sessionFactory = Connection.getSessionFactory();
-        try{
-            session = sessionFactory.openSession();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            throw new ExceptionInInitializerError(e);
-        }
-    }
+    private final SessionFactory sessionFactory = Connection.getSessionFactory();
+    private final Session        session        = sessionFactory.openSession();
     
     /**
      * @param id
@@ -31,7 +21,7 @@ public class CompanyService implements Service<Company> {
      */
     @Override
     public Company getById (long id) {
-        return null;
+        return session.get(Company.class, id);
     }
     
     /**
@@ -84,7 +74,7 @@ public class CompanyService implements Service<Company> {
      */
     @Override
     public String toString (Company object) {
-        return null;
+        return "Company";
     }
     
     /**

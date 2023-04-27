@@ -7,16 +7,7 @@ import org.hibernate.cfg.Configuration;
 public class Connection {
     private static final Configuration configuration = new Configuration().configure("META-INF/persistence.xml");
     
-    private static final SessionFactory sessionFactory;
-    
-    static {
-        try {
-            sessionFactory = configuration.buildSessionFactory();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            throw new ExceptionInInitializerError(e);
-        }
-    }
+    private static final SessionFactory sessionFactory = configuration.buildSessionFactory();
     
     public static SessionFactory getSessionFactory(){
         return sessionFactory;
