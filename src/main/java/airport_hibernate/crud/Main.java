@@ -1,5 +1,6 @@
 package airport_hibernate.crud;
 
+import airport_hibernate.connection_to_db.Connection;
 import airport_hibernate.service.service_classes.CompanyService;
 import airport_hibernate.service.service_classes.PassengerService;
 import airport_hibernate.service.service_classes.TripService;
@@ -166,5 +167,6 @@ public class Main {
                     System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 4);
+        Connection.getSessionFactory().close();
     }
 }
