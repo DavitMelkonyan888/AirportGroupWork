@@ -151,20 +151,11 @@ public class Main {
             v = getValidInt();
             System.out.println();
             switch (v) {
-                case 1:
-                    passengerSwitch();
-                    break;
-                case 2:
-                    companySwitch();
-                    break;
-                case 3:
-                    tripSwitch();
-                    break;
-                case 4:
-                    System.out.println("Exited Successfully");
-                    break;
-                default:
-                    System.out.println("\nInvalid Input Please Try Again\n");
+                case 1 -> passengerSwitch();
+                case 2 -> companySwitch();
+                case 3 -> tripSwitch();
+                case 4 -> System.out.println("Exited Successfully");
+                default -> System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 4);
         Connection.getSessionFactory().close();
