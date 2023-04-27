@@ -1,4 +1,4 @@
-package airport_hibernate;
+package airport_hibernate.data_insert;
 
 import airport_hibernate.connection_to_db.Connection;
 import airport_hibernate.pojo_classes.*;
@@ -15,9 +15,22 @@ import java.sql.Timestamp;
 
 public class InsertDataToAllTables {
     
-    private static void AddressFileImporter(String path, SessionFactory sessionFactory) {
-        
-        try (Session session = sessionFactory.openSession()) {
+    private static final SessionFactory sessionFactory;
+    private static final Session session;
+    
+    // Load Hibernate configuration
+    static {
+        sessionFactory = Connection.getSessionFactory();
+        try{
+            session = sessionFactory.openSession();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+    
+    private static void AddressFileImporter(String path) {
+        try {
             // Open file for reading
             BufferedReader reader = new BufferedReader(new FileReader(path));
             
@@ -41,14 +54,10 @@ public class InsertDataToAllTables {
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
         }
-        // Close the Hibernate session
     }
     
-    private static void CompanyFileImporter(String path, SessionFactory sessionFactory) {
-    
-        // Load Hibernate configuration
-        
-        try (Session session = sessionFactory.openSession()) {
+    private static void CompanyFileImporter(String path) {
+        try {
             // Open file for reading
             BufferedReader reader = new BufferedReader(new FileReader(path));
             
@@ -79,14 +88,10 @@ public class InsertDataToAllTables {
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
         }
-        // Close the Hibernate session
     }
     
-    private static void PassengerFileImporter(String path, SessionFactory sessionFactory) {
-    
-        // Load Hibernate configuration
-        
-        try (Session session = sessionFactory.openSession()) {
+    private static void PassengerFileImporter(String path) {
+        try {
             // Open file for reading
             BufferedReader reader = new BufferedReader(new FileReader(path));
             
@@ -111,14 +116,14 @@ public class InsertDataToAllTables {
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
         }
-        // Close the Hibernate session
+        
     }
     
-    private static void PassInTripFileImporter(String path, SessionFactory sessionFactory) {
+    private static void PassInTripFileImporter(String path) {
         
-        // Load Hibernate configuration
         
-        try (Session session = sessionFactory.openSession()) {
+        
+        try {
             // Open file for reading
             BufferedReader reader = new BufferedReader(new FileReader(path));
             
@@ -148,14 +153,13 @@ public class InsertDataToAllTables {
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
         }
-        // Close the Hibernate session
     }
     
-    private static void TripFileImporter(String path, SessionFactory sessionFactory) {
+    private static void TripFileImporter(String path) {
         
         // Load Hibernate configuration
         
-        try (Session session = sessionFactory.openSession()) {
+        try {
             // Open file for reading
             BufferedReader reader = new BufferedReader(new FileReader(path));
             
@@ -187,16 +191,21 @@ public class InsertDataToAllTables {
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
         }
-        // Close the Hibernate session
     }
     
     public static void main (String[] args) {
-        SessionFactory sessionFactory = Connection.getSessionFactory();
-        CompanyFileImporter("src/main/resources/datas/companies.txt", sessionFactory);
-        AddressFileImporter("src/main/resources/datas/passengers.txt", sessionFactory);
-        PassengerFileImporter("src/main/resources/datas/passengers.txt", sessionFactory);
-        TripFileImporter("src/main/resources/datas/trip.txt", sessionFactory);
-        PassInTripFileImporter("src/main/resources/datas/pass_in_trip.txt", sessionFactory);
+        CompanyFileImporter("src/main/resources/datas/companies.txt");
+        AddressFileImporter("src/main/resources/datas/passengers.txt");
+        PassengerFileImporter("src/main/resources/datas/passengers.txt");
+        TripFileImporter("src/main/resources/datas/trip.txt");
+        PassInTripFileImporter("src/main/resources/datas/pass_in_trip.txt");
+        
+        // Close the Hibernate session
+        try {
+            session.close();
+        } catch (HibernateException e){
+            e.printStackTrace();
+        }
         try {
             sessionFactory.close();
         } catch (HibernateException e){

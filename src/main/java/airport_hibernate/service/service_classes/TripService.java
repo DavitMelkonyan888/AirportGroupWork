@@ -1,6 +1,9 @@
 package airport_hibernate.service.service_classes;
 
+import airport_hibernate.connection_to_db.Connection;
 import airport_hibernate.pojo_classes.Trip;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
@@ -9,9 +12,17 @@ import java.util.Set;
 public class TripService implements airport_hibernate.service.abstract_service.Trip{
     
     private final SessionFactory sessionFactory;
+    private final Session        session;
     
-    public TripService (SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    // Load Hibernate configuration
+    {
+        sessionFactory = Connection.getSessionFactory();
+        try{
+            session = sessionFactory.openSession();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            throw new ExceptionInInitializerError(e);
+        }
     }
     
     /**
@@ -74,6 +85,14 @@ public class TripService implements airport_hibernate.service.abstract_service.T
     @Override
     public String toString (Trip object) {
         return null;
+    }
+    
+    /**
+     *
+     */
+    @Override
+    public void close () {
+        session.close();
     }
     
     /**

@@ -1,5 +1,6 @@
 package airport_hibernate.service.service_classes;
 
+import airport_hibernate.connection_to_db.Connection;
 import airport_hibernate.pojo_classes.Company;
 import airport_hibernate.service.abstract_service.Service;
 import org.hibernate.HibernateException;
@@ -11,13 +12,14 @@ import java.util.Set;
 public class CompanyService implements Service<Company> {
     
     private final SessionFactory sessionFactory;
-    private final Session session;
+    private final Session        session;
     
-    public CompanyService (SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    // Load Hibernate configuration
+    {
+        sessionFactory = Connection.getSessionFactory();
         try{
             session = sessionFactory.openSession();
-        } catch(HibernateException e){
+        } catch (HibernateException e) {
             e.printStackTrace();
             throw new ExceptionInInitializerError(e);
         }
@@ -83,5 +85,13 @@ public class CompanyService implements Service<Company> {
     @Override
     public String toString (Company object) {
         return null;
+    }
+    
+    /**
+     * @return
+     */
+    @Override
+    public void close () {
+        session.close();
     }
 }

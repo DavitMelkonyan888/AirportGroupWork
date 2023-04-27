@@ -10,4 +10,5 @@ public interface Service <T> {
     public abstract void update(T object, long id);
     public abstract void delete(long id);
     public abstract String toString(T object);
+    public abstract void close();
 }
