@@ -13,7 +13,7 @@ public class CompanyService implements Service <Company> {
     
     // Load Hibernate configuration
     private final SessionFactory sessionFactory = Connection.getSessionFactory();
-    private final Session        session        = sessionFactory.openSession();
+    private Session        session;
     
     /**
      * @param id
@@ -21,7 +21,10 @@ public class CompanyService implements Service <Company> {
      */
     @Override
     public Company getById (long id) {
-        return session.get(Company.class, id);
+        session = sessionFactory.openSession();
+        Company company = session.get(Company.class, id);
+        session.close();
+        return company;
     }
     
     /**
@@ -75,13 +78,5 @@ public class CompanyService implements Service <Company> {
     @Override
     public String toString (Company object) {
         return "Company";
-    }
-    
-    /**
-     * @return
-     */
-    @Override
-    public void close () {
-        session.close();
     }
 }

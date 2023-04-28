@@ -10,34 +10,101 @@ public class Menu {
     }
     
     public static void subMenu(){
-        System.out.println("Press 1  For Getting By Id");
-        System.out.println("Press 2  For Getting All");
-        System.out.println("Press 3  For Getting All By Limits");
-        System.out.println("Press 4  For Saving");
-        System.out.println("Press 5  For Updating");
-        System.out.println("Press 6  For Deleting");
+        System.out.println("Press 1  For Creating");
+        System.out.println("Press 2  For Reading");
+        System.out.println("Press 3  For Updating");
+        System.out.println("Press 4  For Deleting");
+        System.out.println("Press 5  For Previous Menu");
     }
     
-    public static void subMenuPassengers(){
-        subMenu();
-        System.out.println("Press 7  For Getting By Trip Id");
-        System.out.println("Press 8  For Registering New Trip For Passenger");
-        System.out.println("Press 9  For Cancelling Trip For Passenger");
-        System.out.println("Press 10 Previous Menu");
+    public static void subMenuPassengersCreate(){
+        System.out.println("Press 1  To Add New Passenger");
+        System.out.println("Press 2  For Previous Menu");
         System.out.print("Type Your Action Number: ");
     }
     
-    public static void subMenuCompanies(){
-        subMenu();
-        System.out.println("Press 7  For Previous Menu");
+    public static void subMenuPassengersRead(){
+        System.out.println("Press 1  To Get By Id");
+        System.out.println("Press 2  To Get All");
+        System.out.println("Press 3  To Get All By Limits");
+        System.out.println("Press 4  To Get By Trip Id");
+        System.out.println("Press 5  For Previous Menu");
         System.out.print("Type Your Action Number: ");
     }
     
-    public static void subMenuTrips(){
-        subMenu();
-        System.out.println("Press 7  For Getting By Town From");
-        System.out.println("Press 8  For Getting By Town To");
-        System.out.println("Press 9  For Previous Menu");
+    public static void subMenuPassengersUpdate(){
+        System.out.println("Press 1  To Change Phone");
+        System.out.println("Press 2  To Change Address");
+        System.out.println("Press 3  To Register New Trip");
+        System.out.println("Press 4  To Cancel Trip");
+        System.out.println("Press 5  For Previous Menu");
         System.out.print("Type Your Action Number: ");
+    }
+    
+    public static void subMenuPassengersDelete(){
+        System.out.println("Press 1  To Delete By Id");
+        System.out.println("Press 2  For Previous Menu");
+        System.out.print("Type Your Action Number: ");
+    }
+    
+    public static void subMenuCompaniesCreate(){
+        System.out.println("Press 1  To Add New Company");
+        System.out.println("Press 2  For Previous Menu");
+        System.out.print("Type Your Action Number: ");
+    }
+    
+    public static void subMenuCompaniesRead(){
+        System.out.println("Press 1  To Get By Id");
+        System.out.println("Press 2  To Get All");
+        System.out.println("Press 3  To Get All By Limits");
+        System.out.println("Press 4  For Previous Menu");
+        System.out.print("Type Your Action Number: ");
+    }
+    
+    public static void subMenuCompaniesUpdate(){
+        System.out.println("Press 1  To Change Name");
+        System.out.println("Press 2  For Previous Menu");
+        System.out.print("Type Your Action Number: ");
+    }
+    
+    public static void subMenuCompaniesDelete(){
+        System.out.println("Press 1  To Delete By Id");
+        System.out.println("Press 2  For Previous Menu");
+        System.out.print("Type Your Action Number: ");
+    }
+    
+    public static void subMenuTripsCreate(){
+        System.out.println("Press 1  To Add New Trip");
+        System.out.println("Press 2  For Previous Menu");
+        System.out.print("Type Your Action Number: ");
+    }
+    
+    public static void subMenuTripsRead(){
+        System.out.println("Press 1  To Get By Id");
+        System.out.println("Press 2  To Get All");
+        System.out.println("Press 3  To Get All By Limits");
+        System.out.println("Press 4  To Get By Town From");
+        System.out.println("Press 5  To Get By Town To");
+        System.out.println("Press 6  For Previous Menu");
+        System.out.print("Type Your Action Number: ");
+    }
+    
+    public static void subMenuTripsUpdate(){
+        System.out.println("Press 1  To Change Town From");
+        System.out.println("Press 2  To Change Town To");
+        System.out.println("Press 3  To Change Time Out");
+        System.out.println("Press 4  To Change Time In");
+        System.out.println("Press 5  For Previous Menu");
+        System.out.print("Type Your Action Number: ");
+    }
+    
+    public static void subMenuTripsDelete(){
+        System.out.println("Press 1  To Delete By Id");
+        System.out.println("Press 2  For Previous Menu");
+        System.out.print("Type Your Action Number: ");
+    }
+    
+    public static void prevMenu(){
+        System.out.println("\nPrevious Menu\n");
     }
 }

@@ -13,7 +13,7 @@ public class TripService implements airport_hibernate.service.abstract_service.T
     
     // Load Hibernate configuration
     private final SessionFactory sessionFactory = Connection.getSessionFactory();
-    private final Session        session        = sessionFactory.openSession();
+    private Session        session        = sessionFactory.openSession();
     
     /**
      * @param id
@@ -75,14 +75,6 @@ public class TripService implements airport_hibernate.service.abstract_service.T
     @Override
     public String toString (Trip object) {
         return null;
-    }
-    
-    /**
-     *
-     */
-    @Override
-    public void close () {
-        session.close();
     }
     
     /**

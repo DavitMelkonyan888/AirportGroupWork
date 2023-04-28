@@ -3,7 +3,6 @@ package airport_hibernate.service.service_classes;
 import airport_hibernate.connection_to_db.Connection;
 import airport_hibernate.pojo_classes.Passenger;
 import airport_hibernate.pojo_classes.Trip;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -14,7 +13,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     
     // Load Hibernate configuration
     private final SessionFactory sessionFactory = Connection.getSessionFactory();
-    private final Session        session        = sessionFactory.openSession();
+    private Session        session        = sessionFactory.openSession();
     
     /**
      * @param tripId
@@ -103,13 +102,5 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     @Override
     public String toString (Passenger object) {
         return null;
-    }
-    
-    /**
-     *
-     */
-    @Override
-    public void close () {
-        session.close();
     }
 }
