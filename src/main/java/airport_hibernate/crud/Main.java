@@ -18,41 +18,37 @@ public class Main {
         do {
             Menu.subMenu();
             v = Validation.getValidInt();
-            System.out.println();
             switch (v) {
-                case 1:
-                    switch(service){
+                case 1 -> {
+                    switch (service) {
                         case PASSENGER -> passengerCreate(new PassengerService());
                         case COMPANY -> companyCreate(new CompanyService());
                         case TRIP -> tripCreate(new TripService());
                     }
-                    break;
-                case 2:
-                    switch(service){
+                }
+                case 2 -> {
+                    switch (service) {
                         case PASSENGER -> passengerRead(new PassengerService());
                         case COMPANY -> companyRead(new CompanyService());
                         case TRIP -> tripRead(new TripService());
                     }
-                    break;
-                case 3:
-                    switch(service){
+                }
+                case 3 -> {
+                    switch (service) {
                         case PASSENGER -> passengerUpdate(new PassengerService());
                         case COMPANY -> companyUpdate(new CompanyService());
                         case TRIP -> tripUpdate(new TripService());
                     }
-                    break;
-                case 4:
-                    switch(service){
+                }
+                case 4 -> {
+                    switch (service) {
                         case PASSENGER -> passengerDelete(new PassengerService());
                         case COMPANY -> companyDelete(new CompanyService());
                         case TRIP -> tripDelete(new TripService());
                     }
-                    break;
-                case 5:
-                    
-                    break;
-                default:
-                    System.out.println("\nInvalid Input Please Try Again\n");
+                }
+                case 5 -> Menu.prevMenu();
+                default -> System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while(v != 5);
     }
@@ -62,11 +58,11 @@ public class Main {
         do {
             Menu.subMenuPassengersCreate();
             v = Validation.getValidInt();
-            System.out.println();
             switch (v) {
                 case 1:
                     break;
                 case 2:
+                    Menu.prevMenu();
                     break;
                 default:
                     System.out.println("\nInvalid Input Please Try Again\n");
@@ -79,7 +75,6 @@ public class Main {
         do {
             Menu.subMenuPassengersRead();
             v = Validation.getValidInt();
-            System.out.println();
             switch (v) {
                 case 1:
                     break;
@@ -90,6 +85,7 @@ public class Main {
                 case 4:
                     break;
                 case 5:
+                    Menu.prevMenu();
                     break;
                 default:
                     System.out.println("\nInvalid Input Please Try Again\n");
@@ -102,7 +98,6 @@ public class Main {
         do {
             Menu.subMenuPassengersUpdate();
             v = Validation.getValidInt();
-            System.out.println();
             switch (v) {
                 case 1:
                     break;
@@ -113,6 +108,7 @@ public class Main {
                 case 4:
                     break;
                 case 5:
+                    Menu.prevMenu();
                     break;
                 default:
                     System.out.println("\nInvalid Input Please Try Again\n");
@@ -125,11 +121,11 @@ public class Main {
         do {
             Menu.subMenuPassengersDelete();
             v = Validation.getValidInt();
-            System.out.println();
             switch (v) {
                 case 1:
                     break;
                 case 2:
+                    Menu.prevMenu();
                     break;
                 default:
                     System.out.println("\nInvalid Input Please Try Again\n");
@@ -142,11 +138,11 @@ public class Main {
         do {
             Menu.subMenuCompaniesCreate();
             v = Validation.getValidInt();
-            System.out.println();
             switch (v) {
                 case 1:
                     break;
                 case 2:
+                    Menu.prevMenu();
                     break;
                 default:
                     System.out.println("\nInvalid Input Please Try Again\n");
@@ -159,7 +155,6 @@ public class Main {
         do {
             Menu.subMenuCompaniesRead();
             v = Validation.getValidInt();
-            System.out.println();
             switch (v) {
                 case 1:
                     break;
@@ -168,6 +163,7 @@ public class Main {
                 case 3:
                     break;
                 case 4:
+                    Menu.prevMenu();
                     break;
                 default:
                     System.out.println("\nInvalid Input Please Try Again\n");
@@ -180,11 +176,11 @@ public class Main {
         do {
             Menu.subMenuCompaniesUpdate();
             v = Validation.getValidInt();
-            System.out.println();
             switch (v) {
                 case 1:
                     break;
                 case 2:
+                    Menu.prevMenu();
                     break;
                 default:
                     System.out.println("\nInvalid Input Please Try Again\n");
@@ -197,11 +193,11 @@ public class Main {
         do {
             Menu.subMenuCompaniesDelete();
             v = Validation.getValidInt();
-            System.out.println();
             switch (v) {
                 case 1:
                     break;
                 case 2:
+                    Menu.prevMenu();
                     break;
                 default:
                     System.out.println("\nInvalid Input Please Try Again\n");
@@ -214,11 +210,11 @@ public class Main {
         do {
             Menu.subMenuTripsCreate();
             v = Validation.getValidInt();
-            System.out.println();
             switch (v) {
                 case 1:
                     break;
                 case 2:
+                    Menu.prevMenu();
                     break;
                 default:
                     System.out.println("\nInvalid Input Please Try Again\n");
@@ -231,7 +227,6 @@ public class Main {
         do {
             Menu.subMenuTripsRead();
             v = Validation.getValidInt();
-            System.out.println();
             switch (v) {
                 case 1:
                     break;
@@ -244,6 +239,7 @@ public class Main {
                 case 5:
                     break;
                 case 6:
+                    Menu.prevMenu();
                     break;
                 default:
                     System.out.println("\nInvalid Input Please Try Again\n");
@@ -256,7 +252,6 @@ public class Main {
         do {
             Menu.subMenuTripsUpdate();
             v = Validation.getValidInt();
-            System.out.println();
             switch (v) {
                 case 1:
                     break;
@@ -267,6 +262,7 @@ public class Main {
                 case 4:
                     break;
                 case 5:
+                    Menu.prevMenu();
                     break;
                 default:
                     System.out.println("\nInvalid Input Please Try Again\n");
@@ -279,11 +275,11 @@ public class Main {
         do {
             Menu.subMenuTripsDelete();
             v = Validation.getValidInt();
-            System.out.println();
             switch (v) {
                 case 1:
                     break;
                 case 2:
+                    Menu.prevMenu();
                     break;
                 default:
                     System.out.println("\nInvalid Input Please Try Again\n");
@@ -296,7 +292,6 @@ public class Main {
         do {
             Menu.mainMenu();
             v = Validation.getValidInt();
-            System.out.println();
             switch (v) {
                 case 1 -> crud(Services.PASSENGER);
                 case 2 -> crud(Services.COMPANY);

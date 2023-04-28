@@ -12,6 +12,7 @@ public class Validation {
             System.out.print("Type Your Action Number: ");
             str = scanner.next();
         }
+        System.out.println();
         return Integer.parseInt(str);
     }
 }
