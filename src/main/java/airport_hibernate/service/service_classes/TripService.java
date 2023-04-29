@@ -21,6 +21,8 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public Trip getById (long id) {
+        session = sessionFactory.openSession();
+        session.close();
         return null;
     }
     
@@ -29,6 +31,8 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public Set <Trip> getAll () {
+        session = sessionFactory.openSession();
+        session.close();
         return null;
     }
     
@@ -40,6 +44,8 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public Set <Trip> get (int offset, int perPage, String sort) {
+        session = sessionFactory.openSession();
+        session.close();
         return null;
     }
     
@@ -48,7 +54,8 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public void save (Trip object) {
-    
+        session = sessionFactory.openSession();
+        session.close();
     }
     
     /**
@@ -57,7 +64,8 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public void update (Trip object, long id) {
-    
+        session = sessionFactory.openSession();
+        session.close();
     }
     
     /**
@@ -65,7 +73,8 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public void delete (long id) {
-    
+        session = sessionFactory.openSession();
+        session.close();
     }
     
     /**
@@ -83,6 +92,8 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public List <Trip> getTripsFrom (String city) {
+        session = sessionFactory.openSession();
+        session.close();
         return null;
     }
     
@@ -92,6 +103,8 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public List <Trip> getTripsTo (String city) {
+        session = sessionFactory.openSession();
+        session.close();
         return null;
     }
 }

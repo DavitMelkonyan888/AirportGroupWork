@@ -32,6 +32,8 @@ public class CompanyService implements Service <Company> {
      */
     @Override
     public Set <Company> getAll () {
+        session = sessionFactory.openSession();
+        session.close();
         return null;
     }
     
@@ -43,6 +45,8 @@ public class CompanyService implements Service <Company> {
      */
     @Override
     public Set <Company> get (int offset, int perPage, String sort) {
+        session = sessionFactory.openSession();
+        session.close();
         return null;
     }
     
@@ -51,7 +55,8 @@ public class CompanyService implements Service <Company> {
      */
     @Override
     public void save (Company object) {
-    
+        session = sessionFactory.openSession();
+        session.close();
     }
     
     /**
@@ -60,7 +65,8 @@ public class CompanyService implements Service <Company> {
      */
     @Override
     public void update (Company object, long id) {
-    
+        session = sessionFactory.openSession();
+        session.close();
     }
     
     /**
@@ -68,7 +74,8 @@ public class CompanyService implements Service <Company> {
      */
     @Override
     public void delete (long id) {
-    
+        session = sessionFactory.openSession();
+        session.close();
     }
     
     /**
