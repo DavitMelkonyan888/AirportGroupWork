@@ -183,14 +183,16 @@ public class InsertDataToAllTables {
     }
     
     public static void main (String[] args) {
-        CompanyFileImporter("src/main/resources/datas/companies.txt");
-        AddressFileImporter("src/main/resources/datas/passengers.txt");
-        PassengerFileImporter("src/main/resources/datas/passengers.txt");
-        TripFileImporter("src/main/resources/datas/trip.txt");
-        PassInTripFileImporter("src/main/resources/datas/pass_in_trip.txt");
-        
         // Close the Hibernate session
-        session.close();
-        sessionFactory.close();
+        try{
+            CompanyFileImporter("src/main/resources/datas/companies.txt");
+            AddressFileImporter("src/main/resources/datas/passengers.txt");
+            PassengerFileImporter("src/main/resources/datas/passengers.txt");
+            TripFileImporter("src/main/resources/datas/trip.txt");
+            PassInTripFileImporter("src/main/resources/datas/pass_in_trip.txt");
+        } finally {
+            session.close();
+            sessionFactory.close();
+        }
     }
 }
