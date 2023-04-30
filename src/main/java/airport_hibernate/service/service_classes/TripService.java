@@ -104,7 +104,13 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public String toString (final Trip trip) {
-        return "Trip{" + "id=" + trip.getId() + ", company=" + trip.getCompany() + ", townFrom='" + trip.getTownFrom() + '\'' + ", townTo='" + trip.getTownTo() + '\'' + ", timeOut=" + trip.getTimeOut() + ", timeIn=" + trip.getTimeIn() + '}';
+        return "Trip{" +
+                "id=" + trip.getId() +
+                ", company=" + new CompanyService().toString(trip.getCompany()) +
+                ", townFrom='" + trip.getTownFrom() + '\'' +
+                ", townTo='" + trip.getTownTo() + '\'' +
+                ", timeOut=" + trip.getTimeOut() +
+                ", timeIn=" + trip.getTimeIn() + '}';
     }
     
     /**

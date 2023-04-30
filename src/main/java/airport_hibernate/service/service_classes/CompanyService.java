@@ -3,17 +3,16 @@ package airport_hibernate.service.service_classes;
 import airport_hibernate.connection_to_db.Connection;
 import airport_hibernate.pojo_classes.Company;
 import airport_hibernate.service.abstract_service.Service;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class CompanyService implements Service <Company> {
     
     // Load Hibernate configuration
     private final SessionFactory sessionFactory = Connection.getSessionFactory();
-    private Session        session;
     
     /**
      * @param id
@@ -21,9 +20,10 @@ public class CompanyService implements Service <Company> {
      */
     @Override
     public Company getById (long id) {
-        session = sessionFactory.openSession();
-        Company company = session.get(Company.class, id);
-        session.close();
+        Company company;
+        try(final Session session = sessionFactory.openSession()) {
+            company = session.get(Company.class, id);
+        }
         return company;
     }
     
@@ -32,41 +32,56 @@ public class CompanyService implements Service <Company> {
      */
     @Override
     public Set <Company> getAll () {
-        session = sessionFactory.openSession();
-        session.close();
-        return null;
+        Set <Company> set;
+        try(final Session session = sessionFactory.openSession()) {
+            set = new LinkedHashSet <>(session.createQuery("FROM Company").getResultList());
+        }
+        return set;
     }
     
     /**
      * @param limit
      * @param offset
-     * @param sort
+     * @param sortBy
      * @return
      */
     @Override
-    public Set <Company> get (int limit, int offset, String sort) {
-        session = sessionFactory.openSession();
-        session.close();
-        return null;
+    public Set <Company> get (int limit, int offset, String sortBy) {
+        Set <Company> set;
+        try(final Session session = sessionFactory.openSession()){
+            String queryString = "FROM Company";
+            if (sortBy != null) {
+                queryString += " ORDER BY " + sortBy;
+            }
+            set = new LinkedHashSet <>(session.createQuery(queryString)
+                    .setFirstResult(offset)
+                    .setMaxResults(limit)
+                    .getResultList());
+        }
+        return set;
     }
     
     /**
-     * @param object
+     * @param company
      */
     @Override
-    public void save (Company object) {
-        session = sessionFactory.openSession();
-        session.close();
+    public void save (Company company) {
+        try(final Session session = sessionFactory.openSession()){
+            session.save(company);
+        }
     }
     
     /**
-     * @param object
+     * @param company
      * @param id
      */
     @Override
-    public void update (Company object, long id) {
-        session = sessionFactory.openSession();
-        session.close();
+    public void update (Company company, long id) {
+        try(final Session session = sessionFactory.openSession()){
+            Company ent = session.get(Company.class, id);
+            ent.setName(company.getName());
+            session.update(ent);
+        }
     }
     
     /**
@@ -74,16 +89,21 @@ public class CompanyService implements Service <Company> {
      */
     @Override
     public void delete (long id) {
-        session = sessionFactory.openSession();
-        session.close();
+        try(final Session session = sessionFactory.openSession()){
+            Company company = session.get(Company.class, id);
+            session.delete(company);
+        }
     }
     
     /**
-     * @param object
+     * @param company
      * @return
      */
     @Override
-    public String toString (Company object) {
-        return "Company";
+    public String toString (Company company) {
+        return "Company{" +
+                "id=" + company.getId() +
+                ", name='" + company.getName() + '\'' +
+                ", foundingDate=" + company.getFoundingDate() + '}';
     }
 }
