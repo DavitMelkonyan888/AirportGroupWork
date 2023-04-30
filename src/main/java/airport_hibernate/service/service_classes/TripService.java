@@ -2,7 +2,6 @@ package airport_hibernate.service.service_classes;
 
 import airport_hibernate.connection_to_db.Connection;
 import airport_hibernate.pojo_classes.Trip;
-import airport_hibernate.validation.Validation;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 

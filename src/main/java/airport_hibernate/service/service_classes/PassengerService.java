@@ -67,13 +67,13 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     }
     
     /**
+     * @param limit
      * @param offset
-     * @param perPage
      * @param sort
      * @return
      */
     @Override
-    public Set <Passenger> get (int offset, int perPage, String sort) {
+    public Set <Passenger> get (int limit, int offset, String sort) {
         final Session session = sessionFactory.openSession();
         session.close();
         return null;

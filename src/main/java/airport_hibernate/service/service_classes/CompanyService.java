@@ -38,13 +38,13 @@ public class CompanyService implements Service <Company> {
     }
     
     /**
+     * @param limit
      * @param offset
-     * @param perPage
      * @param sort
      * @return
      */
     @Override
-    public Set <Company> get (int offset, int perPage, String sort) {
+    public Set <Company> get (int limit, int offset, String sort) {
         session = sessionFactory.openSession();
         session.close();
         return null;
