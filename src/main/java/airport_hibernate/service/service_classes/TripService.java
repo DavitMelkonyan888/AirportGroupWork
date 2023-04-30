@@ -20,9 +20,10 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public Trip getById (final long id) {
-        final Session session = sessionFactory.openSession();
-        Trip trip = session.get(Trip.class, id);
-        session.close();
+        Trip trip;
+        try(final Session session = sessionFactory.openSession()){
+            trip = session.get(Trip.class, id);
+        }
         return trip;
     }
     
@@ -31,9 +32,10 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public Set <Trip> getAll () {
-        final Session session = sessionFactory.openSession();
-        Set <Trip> set = new LinkedHashSet <>(session.createQuery("FROM Trip").getResultList());
-        session.close();
+        Set <Trip>    set;
+        try(final Session session = sessionFactory.openSession()){
+            set = new LinkedHashSet <>(session.createQuery("FROM Trip").getResultList());
+        }
         return set;
     }
     
@@ -45,16 +47,17 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public Set<Trip> get(final int limit, final int offset, final String sortBy) {
-        final Session session = sessionFactory.openSession();
-        String queryString = "FROM Trip";
-        if(sortBy != null) {
-            queryString += " ORDER BY " + sortBy;
+        Set<Trip> set;
+        try(final Session session = sessionFactory.openSession()) {
+            String queryString = "FROM Trip";
+            if (sortBy != null) {
+                queryString += " ORDER BY " + sortBy;
+            }
+            set = new LinkedHashSet <>(session.createQuery(queryString)
+                    .setFirstResult(offset)
+                    .setMaxResults(limit)
+                    .getResultList());
         }
-        Set<Trip> set = new LinkedHashSet<>(session.createQuery(queryString)
-                .setFirstResult(offset)
-                .setMaxResults(limit)
-                .getResultList());
-        session.close();
         return set;
     }
     
@@ -63,9 +66,9 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public void save (final Trip trip) {
-        final Session session = sessionFactory.openSession();
-        session.save(trip);
-        session.close();
+        try(final Session session = sessionFactory.openSession()) {
+            session.save(trip);
+        }
     }
     
     /**
@@ -74,14 +77,14 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public void update (final Trip trip, final long id) {
-        final Session session = sessionFactory.openSession();
-        Trip ent = session.get(Trip.class, id);
-        ent.setTownFrom(trip.getTownFrom());
-        ent.setTownTo(trip.getTownTo());
-        ent.setTimeOut(trip.getTimeOut());
-        ent.setTimeIn(trip.getTimeIn());
-        session.update(ent);
-        session.close();
+        try(final Session session = sessionFactory.openSession()){
+            Trip          ent     = session.get(Trip.class, id);
+            ent.setTownFrom(trip.getTownFrom());
+            ent.setTownTo(trip.getTownTo());
+            ent.setTimeOut(trip.getTimeOut());
+            ent.setTimeIn(trip.getTimeIn());
+            session.update(ent);
+        }
     }
     
     /**
@@ -89,10 +92,10 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public void delete (final long id) {
-        final Session session = sessionFactory.openSession();
-        Trip trip = session.get(Trip.class, id);
-        session.delete(trip);
-        session.close();
+        try(final Session session = sessionFactory.openSession()){
+            Trip          trip    = session.get(Trip.class, id);
+            session.delete(trip);
+        }
     }
     
     /**
@@ -110,12 +113,13 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public List <Trip> getTripsFrom (final String city) {
-        final Session session = sessionFactory.openSession();
-        String queryString = "FROM Trip WHERE  townFrom  = :city";
-        List<Trip> resultList = session.createQuery(queryString, Trip.class)
-                .setParameter("city", city)
-                .getResultList();
-        session.close();
+        List <Trip> resultList;
+        try(final Session session = sessionFactory.openSession()) {
+            String      queryString = "FROM Trip WHERE  townFrom  = :city";
+            resultList  = session.createQuery(queryString, Trip.class)
+                    .setParameter("city", city)
+                    .getResultList();
+        }
         return resultList;
     }
     
@@ -125,12 +129,13 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public List <Trip> getTripsTo (final String city) {
-        final Session session = sessionFactory.openSession();
-        String queryString = "FROM Trip WHERE  townTo  = :city";
-        List<Trip> resultList = session.createQuery(queryString, Trip.class)
-                .setParameter("city", city)
-                .getResultList();
-        session.close();
+        List <Trip>   resultList;
+        try(final Session session     = sessionFactory.openSession()){
+            String        queryString = "FROM Trip WHERE  townTo  = :city";
+            resultList = session.createQuery(queryString, Trip.class)
+                    .setParameter("city", city)
+                    .getResultList();
+        }
         return resultList;
     }
 }
