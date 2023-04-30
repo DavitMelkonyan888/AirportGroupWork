@@ -13,7 +13,6 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     
     // Load Hibernate configuration
     private final SessionFactory sessionFactory = Connection.getSessionFactory();
-    private Session        session        = sessionFactory.openSession();
     
     /**
      * @param tripId
@@ -21,7 +20,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      */
     @Override
     public List <Passenger> getPassengersOfTrip (long tripId) {
-        session = sessionFactory.openSession();
+        final Session session = sessionFactory.openSession();
         session.close();
         return null;
     }
@@ -32,7 +31,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      */
     @Override
     public void registerTrip (Trip trip, Passenger passenger) {
-        session = sessionFactory.openSession();
+        final Session session = sessionFactory.openSession();
         session.close();
     }
     
@@ -42,7 +41,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      */
     @Override
     public void cancelTrip (long passengerId, long tripId) {
-        session = sessionFactory.openSession();
+        final Session session = sessionFactory.openSession();
         session.close();
     }
     
@@ -52,7 +51,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      */
     @Override
     public Passenger getById (long id) {
-        session = sessionFactory.openSession();
+        final Session session = sessionFactory.openSession();
         session.close();
         return null;
     }
@@ -62,7 +61,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      */
     @Override
     public Set <Passenger> getAll () {
-        session = sessionFactory.openSession();
+        final Session session = sessionFactory.openSession();
         session.close();
         return null;
     }
@@ -75,7 +74,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      */
     @Override
     public Set <Passenger> get (int offset, int perPage, String sort) {
-        session = sessionFactory.openSession();
+        final Session session = sessionFactory.openSession();
         session.close();
         return null;
     }
@@ -85,7 +84,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      */
     @Override
     public void save (Passenger object) {
-        session = sessionFactory.openSession();
+        final Session session = sessionFactory.openSession();
         session.close();
     }
     
@@ -95,7 +94,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      */
     @Override
     public void update (Passenger object, long id) {
-        session = sessionFactory.openSession();
+        final Session session = sessionFactory.openSession();
         session.close();
     }
     
@@ -104,7 +103,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      */
     @Override
     public void delete (long id) {
-        session = sessionFactory.openSession();
+        final Session session = sessionFactory.openSession();
         session.close();
     }
     

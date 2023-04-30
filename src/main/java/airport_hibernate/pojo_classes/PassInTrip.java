@@ -15,7 +15,7 @@ public class PassInTrip {
     @ManyToOne
     @JoinColumn ( name = "trip_id" )
     private Trip      trip;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn ( name = "passenger_id" )
     private Passenger passenger;
     @Column ( name = "date" )
