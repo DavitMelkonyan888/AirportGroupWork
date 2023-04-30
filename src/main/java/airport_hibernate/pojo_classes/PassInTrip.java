@@ -11,7 +11,7 @@ public class PassInTrip {
     @Id
     @GeneratedValue
     @Column ( name = "id" )
-    private int       id;
+    private long       id;
     @ManyToOne
     @JoinColumn ( name = "trip_id" )
     private Trip      trip;
@@ -33,11 +33,11 @@ public class PassInTrip {
         this.place = place;
     }
     
-    public int getId () {
+    public long getId () {
         return id;
     }
     
-    public void setId (int id) {
+    public void setId (long id) {
         this.id = id;
     }
     
