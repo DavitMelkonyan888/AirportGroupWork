@@ -1,6 +1,6 @@
 package airport_hibernate.service.service_classes;
 
-import airport_hibernate.connection_to_db.Connection;
+import static airport_hibernate.connection_to_db.Connection.getSessionFactory;
 import airport_hibernate.pojo_classes.Company;
 import airport_hibernate.service.abstract_service.Service;
 import org.hibernate.Session;
@@ -12,7 +12,7 @@ import java.util.Set;
 public class CompanyService implements Service <Company> {
     
     // Load Hibernate configuration
-    private final SessionFactory sessionFactory = Connection.getSessionFactory();
+    private final SessionFactory sessionFactory = getSessionFactory();
     
     /**
      * @param id
@@ -101,9 +101,9 @@ public class CompanyService implements Service <Company> {
      */
     @Override
     public String toString (Company company) {
-        return "Company{" +
-                "id=" + company.getId() +
-                ", name='" + company.getName() + '\'' +
-                ", foundingDate=" + company.getFoundingDate() + '}';
+        return "Company{ " +
+                "id= " + company.getId() +
+                ", name= '" + company.getName() + '\'' +
+                ", foundingDate= " + company.getFoundingDate() + " }";
     }
 }
