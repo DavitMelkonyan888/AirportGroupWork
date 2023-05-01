@@ -79,4 +79,46 @@ public class Validation {
         }
         return id;
     }
+    
+    public static long getValidCompanyId(){
+        String  regex   = "\\d+";
+        long id = -1;
+        String str;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Company Id: ");
+        str = scanner.next();
+        if (str.matches(regex)){
+            id = Integer.parseInt(str);
+        }
+        while(!str.matches(regex) || !isValidCompanyId(id)){
+            System.out.println("\nInvalid Id Please Try Again\n");
+            System.out.print("Enter Company Id: ");
+            str = scanner.next();
+            if (str.matches(regex)){
+                id = Integer.parseInt(str);
+            }
+        }
+        return id;
+    }
+    
+    public static long getValidTripId(){
+        String  regex   = "\\d+";
+        long id = -1;
+        String str;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Trip Id: ");
+        str = scanner.next();
+        if (str.matches(regex)){
+            id = Integer.parseInt(str);
+        }
+        while(!str.matches(regex) || !isValidTripId(id)){
+            System.out.println("\nInvalid Id Please Try Again\n");
+            System.out.print("Enter Trip Id: ");
+            str = scanner.next();
+            if (str.matches(regex)){
+                id = Integer.parseInt(str);
+            }
+        }
+        return id;
+    }
 }
