@@ -50,8 +50,6 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
         }catch (HibernateException e) {
             e.printStackTrace();
         }
-
-
     }
     
     /**
@@ -151,12 +149,10 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
         Transaction transaction = null;
         try(Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            Passenger passenger1 = session.get(Passenger.class, id);
-            passenger1.setPassInTrips(passenger.getPassInTrips());
-            passenger1.setAddress(passenger.getAddress());
-            passenger1.setName(passenger.getName());
-            passenger1.setPhone(passenger.getPhone());
-            session.update(passenger1);
+            Passenger ent = session.get(Passenger.class, id);
+            ent.setAddress(passenger.getAddress());
+            ent.setPhone(passenger.getPhone());
+            session.update(ent);
             transaction.commit();
         }catch (HibernateException e) {
             assert transaction != null;
