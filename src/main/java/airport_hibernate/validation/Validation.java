@@ -12,7 +12,7 @@ public class Validation {
     
     private final static SessionFactory sessionFactory = Connection.getSessionFactory();
     
-    public static int getValidInt(){
+    public static int getValidIntForSwitch(){
         String  regex   = "\\d+";
         Scanner scanner = new Scanner(System.in);
         String  str     = scanner.next();

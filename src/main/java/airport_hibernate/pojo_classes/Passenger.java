@@ -11,7 +11,7 @@ public class Passenger {
     @Id
     @GeneratedValue
     @Column ( name = "id" )
-    private int               id;
+    private long               id;
     @Column ( name = "name" )
     private String            name;
     @Column ( name = "phone" )
@@ -30,11 +30,11 @@ public class Passenger {
         this.address = address;
     }
     
-    public int getId () {
+    public long getId () {
         return id;
     }
     
-    public void setId (int id) {
+    public void setId (long id) {
         this.id = id;
     }
     

@@ -16,7 +16,6 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     
     // Load Hibernate configuration
     private final SessionFactory sessionFactory = Connection.getSessionFactory();
-
     
     /**
      * @param tripId
@@ -25,7 +24,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     @Override
     public List <Passenger> getPassengersOfTrip (final long tripId) {
         List<Passenger> passengers = null;
-        try(Session session = sessionFactory.openSession()) {
+        try(final Session session = sessionFactory.openSession()) {
             List<PassInTrip> passInTrips = new ArrayList<>(session.createQuery("from PassInTrip pit where pit.trip.id = ?1", PassInTrip.class).setParameter(1, tripId).getResultList());
             for (PassInTrip pit: passInTrips) {
                 passengers = new ArrayList<>();
@@ -45,7 +44,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      */
     @Override
     public void registerTrip (final Trip trip, final Passenger passenger, final Timestamp date, String place) {
-        try (Session session = sessionFactory.openSession()) {
+        try (final Session session = sessionFactory.openSession()) {
             PassInTrip passInTrip = new PassInTrip(trip, passenger, date, place);
             session.save(passInTrip);
         }catch (HibernateException e) {
@@ -62,7 +61,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     @Override
     public void cancelTrip (final long passengerId, final long tripId) {
         Transaction transaction = null;
-        try(Session session = sessionFactory.openSession()) {
+        try(final Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             List<PassInTrip> pit = new ArrayList<>(session.createQuery("from PassInTrip pit where pit.passenger.id = ?1 and pit.trip.id = ?2" )
                    .setParameter(1, passengerId).setParameter(2, tripId).getResultList());
@@ -84,7 +83,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     @Override
     public Passenger getById (final long id) {
         Passenger passenger = null;
-        try(Session session = sessionFactory.openSession()){
+        try(final Session session = sessionFactory.openSession()){
             passenger = session.get(Passenger.class, id);
         }catch (HibernateException e) {
             e.printStackTrace();
@@ -99,7 +98,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     @Override
     public Set <Passenger> getAll () {
         Set<Passenger> passengers = new LinkedHashSet<>();
-        try (Session session = sessionFactory.openSession()) {
+        try (final Session session = sessionFactory.openSession()) {
             passengers.addAll(session.createQuery("from Passenger").getResultList());
         }catch (HibernateException e) {
             e.printStackTrace();
@@ -108,22 +107,21 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     }
     
     /**
-     * @param offset
      * @param limit
-     * @param sort
+     * @param offset
+     * @param sortBy
      * @return
      */
     @Override
-    public Set <Passenger> get (final int offset, final int limit, final String sort) {
+    public Set <Passenger> get (final int offset, final int limit, final String sortBy) {
         Set<Passenger> passengers = new HashSet<>();
-        try(Session session = sessionFactory.openSession()) {
-            passengers.addAll(session.createQuery("from Passenger order by" + sort)
+        try(final Session session = sessionFactory.openSession()) {
+            passengers.addAll(session.createQuery("from Passenger order by" + sortBy)
                     .setFirstResult(offset).setMaxResults(limit).getResultList());
             return passengers;
         }catch (HibernateException e) {
             e.printStackTrace();
         }
-
         return null;
     }
     
@@ -186,18 +184,17 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     }
     
     /**
-     * @param object
+     * @param passenger
      * @return
      */
     @Override
-    public String toString (final Passenger object) {
+    public String toString (final Passenger passenger) {
         return "Passenger{" +
-                "id=" + object.getId() +
-                ", name='" + object.getName() + '\'' +
-                ", phone='" + object.getPhone() + '\'' +
-                ", address=" + "country=" + object.getAddress().getCountry() + "city="
-                                          + object.getAddress().getCity() +'\'' +
-                ", passInTrips=" + object.getPassInTrips() +
-                '}';
+                "id=" + passenger.getId() +
+                ", name='" + passenger.getName() + '\'' +
+                ", phone='" + passenger.getPhone() + '\'' +
+                ", address=" + "Address{ country='" + passenger.getAddress().getCountry() + "', city='"
+                                          + passenger.getAddress().getCity() +'\'' +
+                "} }";
     }
 }
