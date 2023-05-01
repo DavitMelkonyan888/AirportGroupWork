@@ -31,9 +31,8 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
                 passengers = new ArrayList<>();
                 passengers.add(pit.getPassenger());
             }
-            for (int i = 0; i < passInTrips.size(); ++i) {
-                passInTrips.clear();
-            }
+            passInTrips.clear();
+
         }catch (HibernateException e) {
             e.printStackTrace();
         }
