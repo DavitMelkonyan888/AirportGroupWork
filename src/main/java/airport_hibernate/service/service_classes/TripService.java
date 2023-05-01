@@ -1,6 +1,6 @@
 package airport_hibernate.service.service_classes;
 
-import airport_hibernate.connection_to_db.Connection;
+import static airport_hibernate.connection_to_db.Connection.getSessionFactory;
 import airport_hibernate.pojo_classes.Trip;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,7 +12,7 @@ import java.util.Set;
 public class TripService implements airport_hibernate.service.abstract_service.Trip {
     
     // Load Hibernate configuration
-    private final SessionFactory sessionFactory = Connection.getSessionFactory();
+    private final SessionFactory sessionFactory = getSessionFactory();
     
     /**
      * @param id
@@ -104,13 +104,13 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public String toString (final Trip trip) {
-        return "Trip{" +
-                "id=" + trip.getId() +
-                ", company=" + new CompanyService().toString(trip.getCompany()) +
-                ", townFrom='" + trip.getTownFrom() + '\'' +
-                ", townTo='" + trip.getTownTo() + '\'' +
-                ", timeOut=" + trip.getTimeOut() +
-                ", timeIn=" + trip.getTimeIn() + '}';
+        return "Trip{ " +
+                "id= " + trip.getId() +
+                ", company= " + new CompanyService().toString(trip.getCompany()) +
+                ", townFrom= '" + trip.getTownFrom() + '\'' +
+                ", townTo= '" + trip.getTownTo() + '\'' +
+                ", timeOut= " + trip.getTimeOut() +
+                ", timeIn= " + trip.getTimeIn() + " }";
     }
     
     /**

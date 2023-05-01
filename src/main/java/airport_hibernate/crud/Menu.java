@@ -15,6 +15,7 @@ public class Menu {
         System.out.println("Press 3  For Updating");
         System.out.println("Press 4  For Deleting");
         System.out.println("Press 5  For Previous Menu");
+        System.out.print("Type Your Action Number: ");
     }
     
     public static void subMenuPassengersCreate(){

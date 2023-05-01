@@ -1,6 +1,6 @@
 package airport_hibernate.service.service_classes;
 
-import airport_hibernate.connection_to_db.Connection;
+import static airport_hibernate.connection_to_db.Connection.getSessionFactory;
 import airport_hibernate.pojo_classes.PassInTrip;
 import airport_hibernate.pojo_classes.Passenger;
 import airport_hibernate.pojo_classes.Trip;
@@ -15,7 +15,7 @@ import java.util.*;
 public class PassengerService implements airport_hibernate.service.abstract_service.Passenger {
     
     // Load Hibernate configuration
-    private final SessionFactory sessionFactory = Connection.getSessionFactory();
+    private final SessionFactory sessionFactory = getSessionFactory();
     
     /**
      * @param tripId
@@ -182,12 +182,12 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      */
     @Override
     public String toString (final Passenger passenger) {
-        return "Passenger{" +
-                "id=" + passenger.getId() +
-                ", name='" + passenger.getName() + '\'' +
-                ", phone='" + passenger.getPhone() + '\'' +
-                ", address=" + "Address{ country='" + passenger.getAddress().getCountry() + "', city='"
+        return "Passenger{ " +
+                "id= " + passenger.getId() +
+                ", name= '" + passenger.getName() + '\'' +
+                ", phone= '" + passenger.getPhone() + '\'' +
+                ", address= " + "Address{ country='" + passenger.getAddress().getCountry() + "', city='"
                                           + passenger.getAddress().getCity() +'\'' +
-                "} }";
+                " } }";
     }
 }
