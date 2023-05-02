@@ -4,42 +4,30 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-@Entity
-@Table ( name = "address" )
+@Embeddable
 public class Address {
     
-    @Id
-    @GeneratedValue
-    @Column ( name = "id" )
-    private int              id;
+
     @Column ( name = "country" )
     private String           country;
     @Column ( name = "city" )
     private String           city;
-    @OneToMany ( mappedBy = "address" )
-    private List <Passenger> passengers;
     
     
     public Address () {}
     
-    public Address (String country, String city) {
+    public Address (final String country, final String city) {
         this.country = country;
         this.city = city;
     }
     
-    public int getId () {
-        return id;
-    }
-    
-    public void setId (int id) {
-        this.id = id;
-    }
+
     
     public String getCountry () {
         return country;
     }
     
-    public void setCountry (String country) {
+    public void setCountry (final String country) {
         this.country = country;
     }
     
@@ -47,15 +35,8 @@ public class Address {
         return city;
     }
     
-    public void setCity (String city) {
+    public void setCity (final String city) {
         this.city = city;
     }
-    
-    public List <Passenger> getPassengers () {
-        return passengers;
-    }
-    
-    public void setPassengers (List <Passenger> passengers) {
-        this.passengers = passengers;
-    }
+
 }

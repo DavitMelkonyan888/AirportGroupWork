@@ -11,7 +11,7 @@ public class Trip {
     
     @Id
     @Column ( name = "id" )
-    private int               id;
+    private long               id;
     @ManyToOne
     @JoinColumn ( name = "company_id" )
     private Company           company;
@@ -28,7 +28,7 @@ public class Trip {
     
     public Trip () {}
     
-    public Trip (int id, Company company, String townFrom, String townTo, Timestamp timeOut, Timestamp timeIn) {
+    public Trip (long id, Company company, String townFrom, String townTo, Timestamp timeOut, Timestamp timeIn) {
         this.id = id;
         this.company = company;
         this.townFrom = townFrom;
@@ -37,11 +37,11 @@ public class Trip {
         this.timeIn = timeIn;
     }
     
-    public int getId () {
+    public long getId () {
         return id;
     }
     
-    public void setId (int id) {
+    public void setId (long id) {
         this.id = id;
     }
     
