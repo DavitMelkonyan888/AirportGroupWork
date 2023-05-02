@@ -12,26 +12,26 @@ public class Company {
     @Id
     @GeneratedValue
     @Column ( name = "id" )
-    private long              id;
+    private int              id;
     @Column ( name = "name" )
     private String           name;
     @Column ( name = "founding_date" )
     private Date             foundingDate;
     @OneToMany ( mappedBy = "company" )
-    private List<Trip> trips;
+    private List <Trip> trips;
     
     public Company () {}
     
-    public Company (final String name, final Date foundingDate) {
+    public Company (String name, Date foundingDate) {
         this.name = name;
         this.foundingDate = foundingDate;
     }
     
-    public long getId () {
+    public int getId () {
         return id;
     }
     
-    public void setId (final long id) {
+    public void setId (int id) {
         this.id = id;
     }
     
@@ -39,7 +39,7 @@ public class Company {
         return name;
     }
     
-    public void setName (final String name) {
+    public void setName (String name) {
         this.name = name;
     }
     
@@ -47,7 +47,7 @@ public class Company {
         return foundingDate;
     }
     
-    public void setFoundingDate (final Date foundingDate) {
+    public void setFoundingDate (Date foundingDate) {
         this.foundingDate = foundingDate;
     }
 }

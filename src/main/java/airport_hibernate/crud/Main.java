@@ -1,11 +1,12 @@
 package airport_hibernate.crud;
 
-import airport_hibernate.connection_to_db.Connection;
-import airport_hibernate.service.abstract_service.Service;
+import static airport_hibernate.connection_to_db.Connection.getSessionFactory;
 import airport_hibernate.service.service_classes.CompanyService;
 import airport_hibernate.service.service_classes.PassengerService;
 import airport_hibernate.service.service_classes.TripService;
-import airport_hibernate.validation.Validation;
+import org.hibernate.SessionFactory;
+
+import static airport_hibernate.validation.Validation.*;
 
 public class Main {
     
@@ -17,7 +18,7 @@ public class Main {
         int v;
         do {
             Menu.subMenu();
-            v = Validation.getValidInt();
+            v = getValidIntForSwitch();
             switch (v) {
                 case 1 -> {
                     switch (service) {
@@ -57,7 +58,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuPassengersCreate();
-            v = Validation.getValidInt();
+            v = getValidIntForSwitch();
             switch (v) {
                 case 1:
                     break;
@@ -74,9 +75,11 @@ public class Main {
         int v;
         do {
             Menu.subMenuPassengersRead();
-            v = Validation.getValidInt();
+            v = getValidIntForSwitch();
             switch (v) {
                 case 1:
+                    long id = getValidPassengerId();
+                    System.out.println(passengerService.toString(passengerService.getById(id)));
                     break;
                 case 2:
                     break;
@@ -97,7 +100,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuPassengersUpdate();
-            v = Validation.getValidInt();
+            v = getValidIntForSwitch();
             switch (v) {
                 case 1:
                     break;
@@ -120,7 +123,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuPassengersDelete();
-            v = Validation.getValidInt();
+            v = getValidIntForSwitch();
             switch (v) {
                 case 1:
                     break;
@@ -137,7 +140,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuCompaniesCreate();
-            v = Validation.getValidInt();
+            v = getValidIntForSwitch();
             switch (v) {
                 case 1:
                     break;
@@ -154,7 +157,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuCompaniesRead();
-            v = Validation.getValidInt();
+            v = getValidIntForSwitch();
             switch (v) {
                 case 1:
                     break;
@@ -175,7 +178,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuCompaniesUpdate();
-            v = Validation.getValidInt();
+            v = getValidIntForSwitch();
             switch (v) {
                 case 1:
                     break;
@@ -192,7 +195,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuCompaniesDelete();
-            v = Validation.getValidInt();
+            v = getValidIntForSwitch();
             switch (v) {
                 case 1:
                     break;
@@ -209,7 +212,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuTripsCreate();
-            v = Validation.getValidInt();
+            v = getValidIntForSwitch();
             switch (v) {
                 case 1:
                     break;
@@ -226,7 +229,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuTripsRead();
-            v = Validation.getValidInt();
+            v = getValidIntForSwitch();
             switch (v) {
                 case 1:
                     break;
@@ -251,7 +254,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuTripsUpdate();
-            v = Validation.getValidInt();
+            v = getValidIntForSwitch();
             switch (v) {
                 case 1:
                     break;
@@ -274,7 +277,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuTripsDelete();
-            v = Validation.getValidInt();
+            v = getValidIntForSwitch();
             switch (v) {
                 case 1:
                     break;
@@ -288,18 +291,19 @@ public class Main {
     }
     
     public static void main (String[] args) {
-        int v;
-        do {
-            Menu.mainMenu();
-            v = Validation.getValidInt();
-            switch (v) {
-                case 1 -> crud(Services.PASSENGER);
-                case 2 -> crud(Services.COMPANY);
-                case 3 -> crud(Services.TRIP);
-                case 4 -> System.out.println("Exited Successfully");
-                default -> System.out.println("\nInvalid Input Please Try Again\n");
-            }
-        } while (v != 4);
-        Connection.getSessionFactory().close();
+        try (SessionFactory ignored = getSessionFactory()) {
+            int v;
+            do {
+                Menu.mainMenu();
+                v = getValidIntForSwitch();
+                switch (v) {
+                    case 1 -> crud(Services.PASSENGER);
+                    case 2 -> crud(Services.COMPANY);
+                    case 3 -> crud(Services.TRIP);
+                    case 4 -> System.out.println("Exited Successfully");
+                    default -> System.out.println("\nInvalid Input Please Try Again\n");
+                }
+            } while (v != 4);
+        }
     }
 }

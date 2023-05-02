@@ -1,6 +1,6 @@
 package airport_hibernate.data_insert;
 
-import airport_hibernate.connection_to_db.Connection;
+import static airport_hibernate.connection_to_db.Connection.getSessionFactory;
 import airport_hibernate.pojo_classes.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 
 public class InsertDataToAllTables {
     // Load Hibernate configuration
-    private static final SessionFactory sessionFactory = Connection.getSessionFactory();
+    private static final SessionFactory sessionFactory = getSessionFactory();
     private static final Session session = sessionFactory.openSession();
     
     private static void AddressFileImporter(final String path) {
