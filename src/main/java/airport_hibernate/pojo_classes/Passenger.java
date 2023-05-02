@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table ( name = "passenger" )
+@Table ( name = "passenger")
 public class Passenger {
     
     @Id
@@ -16,15 +16,15 @@ public class Passenger {
     private String            name;
     @Column ( name = "phone" )
     private String            phone;
-    @ManyToOne
-    @JoinColumn ( name = "address_id" )
-    private Address           address;
+
+    @Embedded
+    private Address          address;
     @OneToMany ( mappedBy = "passenger" )
     private List <PassInTrip> passInTrips;
     
     public Passenger () {}
     
-    public Passenger (String name, String phone, Address address) {
+    public Passenger (final String name, final String phone, final Address address) {
         this.name = name;
         this.phone = phone;
         this.address = address;
@@ -34,7 +34,7 @@ public class Passenger {
         return id;
     }
     
-    public void setId (long id) {
+    public void setId (final long id) {
         this.id = id;
     }
     
@@ -42,7 +42,7 @@ public class Passenger {
         return name;
     }
     
-    public void setName (String name) {
+    public void setName (final String name) {
         this.name = name;
     }
     
@@ -50,7 +50,7 @@ public class Passenger {
         return phone;
     }
     
-    public void setPhone (String phone) {
+    public void setPhone (final String phone) {
         this.phone = phone;
     }
     
@@ -58,7 +58,15 @@ public class Passenger {
         return address;
     }
     
-    public void setAddress (Address address) {
+    public void setAddress (final Address address) {
         this.address = address;
+    }
+
+    public void setPassInTrips(final List<PassInTrip> passInTrips) {
+        this.passInTrips = passInTrips;
+    }
+
+    public List<PassInTrip> getPassInTrips() {
+        return passInTrips;
     }
 }

@@ -28,7 +28,7 @@ public class Trip {
     
     public Trip () {}
     
-    public Trip (int id, Company company, String townFrom, String townTo, Timestamp timeOut, Timestamp timeIn) {
+    public Trip (long id, Company company, String townFrom, String townTo, Timestamp timeOut, Timestamp timeIn) {
         this.id = id;
         this.company = company;
         this.townFrom = townFrom;

@@ -12,7 +12,7 @@ public class PassInTrip {
     @GeneratedValue
     @Column ( name = "id" )
     private long       id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn ( name = "trip_id" )
     private Trip      trip;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -26,7 +26,7 @@ public class PassInTrip {
     
     public PassInTrip () {}
     
-    public PassInTrip (Trip trip, Passenger passenger, Timestamp date, String place) {
+    public PassInTrip (final Trip trip, final Passenger passenger, final Timestamp date, final String place) {
         this.trip = trip;
         this.passenger = passenger;
         this.date = date;
@@ -37,7 +37,7 @@ public class PassInTrip {
         return id;
     }
     
-    public void setId (long id) {
+    public void setId (final long id) {
         this.id = id;
     }
     
@@ -45,7 +45,7 @@ public class PassInTrip {
         return trip;
     }
     
-    public void setTrip (Trip trip) {
+    public void setTrip (final Trip trip) {
         this.trip = trip;
     }
     
@@ -53,7 +53,7 @@ public class PassInTrip {
         return passenger;
     }
     
-    public void setPassenger (Passenger passenger) {
+    public void setPassenger (final Passenger passenger) {
         this.passenger = passenger;
     }
     
@@ -61,7 +61,7 @@ public class PassInTrip {
         return date;
     }
     
-    public void setDate (Timestamp date) {
+    public void setDate (final Timestamp date) {
         this.date = date;
     }
     
@@ -69,7 +69,7 @@ public class PassInTrip {
         return place;
     }
     
-    public void setPlace (String place) {
+    public void setPlace (final String place) {
         this.place = place;
     }
 }

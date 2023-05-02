@@ -12,7 +12,7 @@ public class Company {
     @Id
     @GeneratedValue
     @Column ( name = "id" )
-    private long              id;
+    private int              id;
     @Column ( name = "name" )
     private String           name;
     @Column ( name = "founding_date" )
@@ -27,11 +27,11 @@ public class Company {
         this.foundingDate = foundingDate;
     }
     
-    public long getId () {
+    public int getId () {
         return id;
     }
     
-    public void setId (long id) {
+    public void setId (int id) {
         this.id = id;
     }
     
