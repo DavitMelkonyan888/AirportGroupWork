@@ -18,11 +18,10 @@ public class InsertDataToAllTables {
     private static final SessionFactory sessionFactory = Connection.getSessionFactory();
     private static final Session session = sessionFactory.openSession();
     
-    private static void AddressFileImporter(String path) {
-        try {
-            // Open file for reading
-            BufferedReader reader = new BufferedReader(new FileReader(path));
-            
+    private static void AddressFileImporter(final String path) {
+        // Open file for reading
+        try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
+
             // Read each line of the file
             String line;
             while ((line = reader.readLine()) != null) {
@@ -37,18 +36,16 @@ public class InsertDataToAllTables {
                 session.save(address);
                 transaction.commit();
             }
-            
-            // Close the file
-            reader.close();
+
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
         }
     }
     
     private static void CompanyFileImporter(String path) {
-        try {
             // Open file for reading
-            BufferedReader reader = new BufferedReader(new FileReader(path));
+        try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
+
             
             // Read each line of the file
             String line;
@@ -72,17 +69,17 @@ public class InsertDataToAllTables {
                 transaction.commit();
             }
             
-            // Close the file
-            reader.close();
+
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
         }
     }
     
     private static void PassengerFileImporter(String path) {
-        try {
-            // Open file for reading
-            BufferedReader reader = new BufferedReader(new FileReader(path));
+        // Open file for reading
+        try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
+
+
             
             // Read each line of the file
             String line;
@@ -100,8 +97,7 @@ public class InsertDataToAllTables {
                 transaction.commit();
             }
             
-            // Close the file
-            reader.close();
+
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
         }
@@ -112,9 +108,9 @@ public class InsertDataToAllTables {
         
         
         
-        try {
+        try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
             // Open file for reading
-            BufferedReader reader = new BufferedReader(new FileReader(path));
+
             
             // Read each line of the file
             String line;
@@ -137,8 +133,7 @@ public class InsertDataToAllTables {
                 transaction.commit();
             }
             
-            // Close the file
-            reader.close();
+
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
         }
@@ -146,11 +141,11 @@ public class InsertDataToAllTables {
     
     private static void TripFileImporter(String path) {
         
-        // Load Hibernate configuration
-        
-        try {
-            // Open file for reading
-            BufferedReader reader = new BufferedReader(new FileReader(path));
+
+        // Open file for reading
+        try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
+
+
             
             // Read each line of the file
             String line;
@@ -175,8 +170,7 @@ public class InsertDataToAllTables {
                 transaction.commit();
             }
             
-            // Close the file
-            reader.close();
+
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
         }
