@@ -84,7 +84,6 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
         }catch (HibernateException e) {
             e.printStackTrace();
         }
-
         return passenger;
     }
     
