@@ -1,9 +1,13 @@
 package airport_hibernate.crud;
 
 import static airport_hibernate.connection_to_db.Connection.getSessionFactory;
+
+import airport_hibernate.pojo_classes.Company;
+import airport_hibernate.service.abstract_service.Service;
 import airport_hibernate.service.service_classes.CompanyService;
 import airport_hibernate.service.service_classes.PassengerService;
 import airport_hibernate.service.service_classes.TripService;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import static airport_hibernate.validation.Validation.*;
@@ -43,9 +47,9 @@ public class Main {
                 }
                 case 4 -> {
                     switch (service) {
-                        case PASSENGER -> passengerDelete(new PassengerService());
-                        case COMPANY -> companyDelete(new CompanyService());
-                        case TRIP -> tripDelete(new TripService());
+                        case PASSENGER -> serviceDelete(new PassengerService());
+                        case COMPANY -> serviceDelete(new CompanyService());
+                        case TRIP -> serviceDelete(new TripService());
                     }
                 }
                 case 5 -> Menu.prevMenu();
@@ -57,7 +61,7 @@ public class Main {
     private static void passengerCreate(PassengerService passengerService){
         int v;
         do {
-            Menu.subMenuPassengersCreate();
+            Menu.subMenuCreate();
             v = getValidIntForSwitch();
             switch (v) {
                 case 1:
@@ -71,15 +75,14 @@ public class Main {
         } while (v != 2);
     }
     
-    private static void passengerRead(PassengerService passengerService){
+    private static void passengerRead(final PassengerService passengerService){
         int v;
         do {
             Menu.subMenuPassengersRead();
             v = getValidIntForSwitch();
             switch (v) {
                 case 1:
-                    long id = getValidPassengerId();
-                    System.out.println(passengerService.toString(passengerService.getById(id)));
+                    System.out.println(passengerService.toString(getValidPassengerById()) + '\n');
                     break;
                 case 2:
                     break;
@@ -119,27 +122,10 @@ public class Main {
         } while (v != 5);
     }
     
-    private static void passengerDelete(PassengerService passengerService){
-        int v;
-        do {
-            Menu.subMenuPassengersDelete();
-            v = getValidIntForSwitch();
-            switch (v) {
-                case 1:
-                    break;
-                case 2:
-                    Menu.prevMenu();
-                    break;
-                default:
-                    System.out.println("\nInvalid Input Please Try Again\n");
-            }
-        } while (v != 2);
-    }
-    
     private static void companyCreate(CompanyService companyService){
         int v;
         do {
-            Menu.subMenuCompaniesCreate();
+            Menu.subMenuCreate();
             v = getValidIntForSwitch();
             switch (v) {
                 case 1:
@@ -160,6 +146,7 @@ public class Main {
             v = getValidIntForSwitch();
             switch (v) {
                 case 1:
+                    System.out.println(companyService.toString(getValidCompanyById()) + '\n');
                     break;
                 case 2:
                     break;
@@ -191,27 +178,10 @@ public class Main {
         } while (v != 2);
     }
     
-    private static void companyDelete(CompanyService companyService){
-        int v;
-        do {
-            Menu.subMenuCompaniesDelete();
-            v = getValidIntForSwitch();
-            switch (v) {
-                case 1:
-                    break;
-                case 2:
-                    Menu.prevMenu();
-                    break;
-                default:
-                    System.out.println("\nInvalid Input Please Try Again\n");
-            }
-        } while (v != 2);
-    }
-    
     private static void tripCreate(TripService tripService){
         int v;
         do {
-            Menu.subMenuTripsCreate();
+            Menu.subMenuCreate();
             v = getValidIntForSwitch();
             switch (v) {
                 case 1:
@@ -232,6 +202,7 @@ public class Main {
             v = getValidIntForSwitch();
             switch (v) {
                 case 1:
+                    System.out.println(tripService.toString(getValidTripById()) + '\n');
                     break;
                 case 2:
                     break;
@@ -273,13 +244,14 @@ public class Main {
         } while (v != 5);
     }
     
-    private static void tripDelete(TripService tripService){
+    private static <T extends Service> void serviceCreate(T service){
         int v;
         do {
-            Menu.subMenuTripsDelete();
+            Menu.subMenuCreate();
             v = getValidIntForSwitch();
             switch (v) {
                 case 1:
+                    createRow(service);
                     break;
                 case 2:
                     Menu.prevMenu();
@@ -288,6 +260,50 @@ public class Main {
                     System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 2);
+    }
+    
+    private static <T extends Service> void createRow(T service){
+        if (service instanceof CompanyService){
+            long id = getValidCompanyId();
+            service.delete(id);
+        } else if (service instanceof PassengerService){
+            long id = getValidPassengerId();
+            service.delete(id);
+        } else {
+            long id = getValidTripId();
+            service.delete(id);
+        }
+    }
+    
+    private static <T extends Service> void serviceDelete(T service){
+        int v;
+        do {
+            Menu.subMenuDelete();
+            v = getValidIntForSwitch();
+            switch (v) {
+                case 1:
+                    deleteRow(service);
+                    break;
+                case 2:
+                    Menu.prevMenu();
+                    break;
+                default:
+                    System.out.println("\nInvalid Input Please Try Again\n");
+            }
+        } while (v != 2);
+    }
+    
+    private static <T extends Service> void deleteRow(T service){
+        if (service instanceof CompanyService){
+            long id = getValidCompanyId();
+            service.delete(id);
+        } else if (service instanceof PassengerService){
+            long id = getValidPassengerId();
+            service.delete(id);
+        } else {
+            long id = getValidTripId();
+            service.delete(id);
+        }
     }
     
     public static void main (String[] args) {

@@ -18,12 +18,6 @@ public class Menu {
         System.out.print("Type Your Action Number: ");
     }
     
-    public static void subMenuPassengersCreate(){
-        System.out.println("Press 1  To Add New Passenger");
-        System.out.println("Press 2  For Previous Menu");
-        System.out.print("Type Your Action Number: ");
-    }
-    
     public static void subMenuPassengersRead(){
         System.out.println("Press 1  To Get By Id");
         System.out.println("Press 2  To Get All");
@@ -42,18 +36,6 @@ public class Menu {
         System.out.print("Type Your Action Number: ");
     }
     
-    public static void subMenuPassengersDelete(){
-        System.out.println("Press 1  To Delete By Id");
-        System.out.println("Press 2  For Previous Menu");
-        System.out.print("Type Your Action Number: ");
-    }
-    
-    public static void subMenuCompaniesCreate(){
-        System.out.println("Press 1  To Add New Company");
-        System.out.println("Press 2  For Previous Menu");
-        System.out.print("Type Your Action Number: ");
-    }
-    
     public static void subMenuCompaniesRead(){
         System.out.println("Press 1  To Get By Id");
         System.out.println("Press 2  To Get All");
@@ -64,18 +46,6 @@ public class Menu {
     
     public static void subMenuCompaniesUpdate(){
         System.out.println("Press 1  To Change Name");
-        System.out.println("Press 2  For Previous Menu");
-        System.out.print("Type Your Action Number: ");
-    }
-    
-    public static void subMenuCompaniesDelete(){
-        System.out.println("Press 1  To Delete By Id");
-        System.out.println("Press 2  For Previous Menu");
-        System.out.print("Type Your Action Number: ");
-    }
-    
-    public static void subMenuTripsCreate(){
-        System.out.println("Press 1  To Add New Trip");
         System.out.println("Press 2  For Previous Menu");
         System.out.print("Type Your Action Number: ");
     }
@@ -99,7 +69,13 @@ public class Menu {
         System.out.print("Type Your Action Number: ");
     }
     
-    public static void subMenuTripsDelete(){
+    public static void subMenuCreate(){
+        System.out.println("Press 1  To Add New Row");
+        System.out.println("Press 2  For Previous Menu");
+        System.out.print("Type Your Action Number: ");
+    }
+    
+    public static void subMenuDelete(){
         System.out.println("Press 1  To Delete By Id");
         System.out.println("Press 2  For Previous Menu");
         System.out.print("Type Your Action Number: ");
