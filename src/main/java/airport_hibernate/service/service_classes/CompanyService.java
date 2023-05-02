@@ -7,20 +7,21 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class CompanyService implements Service <Company> {
     
     // Load Hibernate configuration
     private final SessionFactory sessionFactory = Connection.getSessionFactory();
-    private Session        session;
+    private Session     session;
     
     /**
      * @param id
      * @return
      */
     @Override
-    public Company getById (long id) {
+    public Company getById (final long id) {
         session = sessionFactory.openSession();
         Company company = session.get(Company.class, id);
         session.close();
@@ -32,9 +33,11 @@ public class CompanyService implements Service <Company> {
      */
     @Override
     public Set <Company> getAll () {
+        Set<Company> company = new HashSet<>();
         session = sessionFactory.openSession();
+        company.addAll(session.createQuery("from Company").getResultList());
         session.close();
-        return null;
+        return company;
     }
     
     /**
@@ -44,8 +47,9 @@ public class CompanyService implements Service <Company> {
      * @return
      */
     @Override
-    public Set <Company> get (int offset, int perPage, String sort) {
+    public Set <Company> get (final int offset, final int perPage, final String sort) {
         session = sessionFactory.openSession();
+
         session.close();
         return null;
     }
@@ -54,7 +58,7 @@ public class CompanyService implements Service <Company> {
      * @param object
      */
     @Override
-    public void save (Company object) {
+    public void save (final Company object) {
         session = sessionFactory.openSession();
         session.close();
     }
@@ -64,7 +68,7 @@ public class CompanyService implements Service <Company> {
      * @param id
      */
     @Override
-    public void update (Company object, long id) {
+    public void update (final Company object, final long id) {
         session = sessionFactory.openSession();
         session.close();
     }
@@ -73,7 +77,7 @@ public class CompanyService implements Service <Company> {
      * @param id
      */
     @Override
-    public void delete (long id) {
+    public void delete (final long id) {
         session = sessionFactory.openSession();
         session.close();
     }
@@ -83,7 +87,8 @@ public class CompanyService implements Service <Company> {
      * @return
      */
     @Override
-    public String toString (Company object) {
+    public String toString (final Company object) {
         return "Company";
     }
+
 }

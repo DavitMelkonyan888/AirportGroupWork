@@ -176,7 +176,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
         try(Session session = sessionFactory.openSession()){
             transaction = session.beginTransaction();
             Passenger passenger = session.get(Passenger.class, id);
-            session.detach(passenger);
+            session.delete(passenger);
             transaction.commit();
         }catch (HibernateException e) {
             assert transaction != null;
