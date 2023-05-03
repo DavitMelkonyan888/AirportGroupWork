@@ -1,22 +1,21 @@
 package parsings.xml;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement (name = "student")
-public class XMLStudent {
-    @XmlAttribute (name = "rollno")
+public class Student {
     private int rollNo;
-    
     private String firstname;
     private String lastname;
     private String nickname;
     private int marks;
     
-    public XMLStudent () {
+    public Student () {
     }
     
-    public XMLStudent (int rollNo, String firstname, String lastname, String nickname, int marks) {
+    public Student (int rollNo, String firstname, String lastname, String nickname, int marks) {
         this.rollNo = rollNo;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -24,14 +23,15 @@ public class XMLStudent {
         this.marks = marks;
     }
     
-    public int getRollNoValue () {
+    @XmlAttribute
+    public int getRollNo () {
         return rollNo;
     }
     
     public void setRollNoValue (int rollNo) {
         this.rollNo = rollNo;
     }
-    
+    @XmlElement
     public String getFirstname () {
         return firstname;
     }
@@ -39,7 +39,7 @@ public class XMLStudent {
     public void setFirstname (String firstname) {
         this.firstname = firstname;
     }
-    
+    @XmlElement
     public String getLastname () {
         return lastname;
     }
@@ -47,7 +47,7 @@ public class XMLStudent {
     public void setLastname (String lastname) {
         this.lastname = lastname;
     }
-    
+    @XmlElement
     public String getNickname () {
         return nickname;
     }
@@ -55,7 +55,7 @@ public class XMLStudent {
     public void setNickname (String nickname) {
         this.nickname = nickname;
     }
-    
+    @XmlElement
     public int getMarks () {
         return marks;
     }
@@ -66,6 +66,6 @@ public class XMLStudent {
     
     @Override
     public String toString () {
-        return "XMLStudent{" + "rollNo=" + rollNo + ", firstname='" + firstname + '\'' + ", lastname='" + lastname + '\'' + ", nickname='" + nickname + '\'' + ", marks=" + marks + '}';
+        return "Student{" + "rollNo=" + rollNo + ", firstname='" + firstname + '\'' + ", lastname='" + lastname + '\'' + ", nickname='" + nickname + '\'' + ", marks=" + marks + '}';
     }
 }

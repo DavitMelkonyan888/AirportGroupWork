@@ -1,6 +1,7 @@
 package airport_hibernate.service.service_classes;
 
 import static airport_hibernate.connection_to_db.Connection.getSessionFactory;
+import static airport_hibernate.service.single_ton_objects.SingleTonService.*;
 import airport_hibernate.pojo_classes.Trip;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -106,7 +107,7 @@ public class TripService implements airport_hibernate.service.abstract_service.T
     public String toString (final Trip trip) {
         return "Trip{ " +
                 "id= " + trip.getId() +
-                ", company= " + new CompanyService().toString(trip.getCompany()) +
+                ", company= " + getCompanyService().toString(trip.getCompany()) +
                 ", townFrom= '" + trip.getTownFrom() + '\'' +
                 ", townTo= '" + trip.getTownTo() + '\'' +
                 ", timeOut= " + trip.getTimeOut() +

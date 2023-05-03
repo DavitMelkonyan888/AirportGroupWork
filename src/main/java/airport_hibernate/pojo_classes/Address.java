@@ -7,7 +7,6 @@ import java.util.List;
 @Embeddable
 public class Address {
     
-
     @Column ( name = "country" )
     private String           country;
     @Column ( name = "city" )

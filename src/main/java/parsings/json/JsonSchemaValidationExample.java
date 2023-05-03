@@ -14,10 +14,14 @@ public class JsonSchemaValidationExample {
     public static void main(String[] args) {
         try {
             // Load the JSON Schema from file
-            Schema schema = SchemaLoader.load(new JSONObject(new String(Files.readAllBytes(new File("C:\\Users\\Davit\\IdeaProjects\\xmljson\\src\\main\\resources\\actor_scheme.json").toPath()))));
+            Schema schema = SchemaLoader
+                    .load(new JSONObject(new String(Files
+                    .readAllBytes(new File("src/main/resources/parsing_data/actor_schema.json")
+                    .toPath()))));
             
             // Load the JSON document from file
-            JSONObject actorJson = new JSONObject(new JSONTokener(String.valueOf(new File("C:\\Users\\Davit\\IdeaProjects\\xmljson\\src\\main\\resources\\actors.json"))));
+            JSONObject actorJson = new JSONObject(new JSONTokener(String
+                    .valueOf(new File("src/main/resources/parsing_data/actor.json"))));
             
             // Validate the JSON document against the schema
             schema.validate(actorJson);

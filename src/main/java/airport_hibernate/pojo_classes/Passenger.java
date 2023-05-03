@@ -16,7 +16,6 @@ public class Passenger {
     private String            name;
     @Column ( name = "phone" )
     private String            phone;
-
     @Embedded
     private Address          address;
     @OneToMany ( mappedBy = "passenger" )

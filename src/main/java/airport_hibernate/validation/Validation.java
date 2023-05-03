@@ -60,9 +60,9 @@ public class Validation {
         return isValidCompanyId(trip.getCompany().getId()) && !trip.getTownFrom().equals(trip.getTownTo()) && trip.getTimeOut().before(trip.getTimeIn());
     }
     
-    public static boolean isValidPassenger(final Passenger passenger){
-        return isValidAddressId(passenger.getAddress().getId());
-    }
+//    public static boolean isValidPassenger(final Passenger passenger){
+//        return isValidAddressId(passenger.getAddress().getId());
+//    }
     public static long getValidPassengerId(){
         String  regex   = "\\d+";
         long id = -1;

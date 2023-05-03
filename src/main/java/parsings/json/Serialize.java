@@ -17,7 +17,7 @@ public class Serialize {
         
         Gson gson = new Gson();
         
-        try (FileWriter writer = new FileWriter("C:\\Users\\Davit\\IdeaProjects\\xmljson\\src\\main\\resources\\actor1.json")) {
+        try (FileWriter writer = new FileWriter("src/main/resources/parsing_data/actor1.json")) {
             gson.toJson(actor, writer);
             System.out.println("Serialization successful.");
         } catch (IOException e) {

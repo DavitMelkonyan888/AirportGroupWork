@@ -2,12 +2,10 @@ package airport_hibernate.crud;
 
 import static airport_hibernate.connection_to_db.Connection.getSessionFactory;
 
-import airport_hibernate.pojo_classes.Company;
 import airport_hibernate.service.abstract_service.Service;
 import airport_hibernate.service.service_classes.CompanyService;
 import airport_hibernate.service.service_classes.PassengerService;
 import airport_hibernate.service.service_classes.TripService;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import static airport_hibernate.validation.Validation.*;
@@ -26,9 +24,9 @@ public class Main {
             switch (v) {
                 case 1 -> {
                     switch (service) {
-                        case PASSENGER -> passengerCreate(new PassengerService());
-                        case COMPANY -> companyCreate(new CompanyService());
-                        case TRIP -> tripCreate(new TripService());
+                        case PASSENGER -> serviceCreate(new PassengerService());
+                        case COMPANY -> serviceCreate(new CompanyService());
+                        case TRIP -> serviceCreate(new TripService());
                     }
                 }
                 case 2 -> {
@@ -56,23 +54,6 @@ public class Main {
                 default -> System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while(v != 5);
-    }
-    
-    private static void passengerCreate(PassengerService passengerService){
-        int v;
-        do {
-            Menu.subMenuCreate();
-            v = getValidIntForSwitch();
-            switch (v) {
-                case 1:
-                    break;
-                case 2:
-                    Menu.prevMenu();
-                    break;
-                default:
-                    System.out.println("\nInvalid Input Please Try Again\n");
-            }
-        } while (v != 2);
     }
     
     private static void passengerRead(final PassengerService passengerService){
@@ -122,23 +103,6 @@ public class Main {
         } while (v != 5);
     }
     
-    private static void companyCreate(CompanyService companyService){
-        int v;
-        do {
-            Menu.subMenuCreate();
-            v = getValidIntForSwitch();
-            switch (v) {
-                case 1:
-                    break;
-                case 2:
-                    Menu.prevMenu();
-                    break;
-                default:
-                    System.out.println("\nInvalid Input Please Try Again\n");
-            }
-        } while (v != 2);
-    }
-    
     private static void companyRead(CompanyService companyService){
         int v;
         do {
@@ -165,23 +129,6 @@ public class Main {
         int v;
         do {
             Menu.subMenuCompaniesUpdate();
-            v = getValidIntForSwitch();
-            switch (v) {
-                case 1:
-                    break;
-                case 2:
-                    Menu.prevMenu();
-                    break;
-                default:
-                    System.out.println("\nInvalid Input Please Try Again\n");
-            }
-        } while (v != 2);
-    }
-    
-    private static void tripCreate(TripService tripService){
-        int v;
-        do {
-            Menu.subMenuCreate();
             v = getValidIntForSwitch();
             switch (v) {
                 case 1:

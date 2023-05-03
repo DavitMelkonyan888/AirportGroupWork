@@ -1,4 +1,5 @@
 package parsings.json;
+
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -12,7 +13,7 @@ public class Deserialize {
         // Deserialize data from file
         Gson gson = new Gson();
         Actor actor = null;
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Davit\\IdeaProjects\\xmljson\\src\\main\\resources\\actor.json"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/parsing_data/actor.json"))) {
             actor = gson.fromJson(br, Actor.class);
         } catch (IOException e) {
             e.printStackTrace();
@@ -24,7 +25,7 @@ public class Deserialize {
         actor.getTags().add("Harry Potter");
         
         // Serialize data to file
-        try (FileWriter writer = new FileWriter("actor.json")) {
+        try (FileWriter writer = new FileWriter("src/main/resources/parsing_data/actor.json")) {
             gson.toJson(actor, writer);
         } catch (IOException e) {
             e.printStackTrace();
