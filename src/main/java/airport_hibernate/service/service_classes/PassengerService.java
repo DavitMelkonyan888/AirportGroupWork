@@ -113,10 +113,10 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      * @return
      */
     @Override
-    public Set <Passenger> get (final int offset, final int limit, final String sortBy) {
-        Set<Passenger> passengers = null;
+    public Set <Passenger> get (final int limit, final int offset, final String sortBy) {
+        Set<Passenger> passengers;
         try(final Session session = sessionFactory.openSession()) {
-            passengers = new LinkedHashSet <>(session.createQuery("from Passenger order by" + sortBy)
+            passengers = new LinkedHashSet <>(session.createQuery("from Passenger ORDER BY " + sortBy)
                     .setFirstResult(offset).setMaxResults(limit).getResultList());
         }
         return passengers;

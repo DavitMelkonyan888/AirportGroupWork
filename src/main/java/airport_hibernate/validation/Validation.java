@@ -19,19 +19,14 @@ public class Validation {
     public static int getValidIntForSwitch(){
         String  regex   = "\\d+";
         Scanner scanner = new Scanner(System.in);
-        String str = "";
-        if (!scanner.hasNext()) {
-            str = scanner.next();
-        }
+        String  str = scanner.next();
         while(!str.matches(regex)){
             System.out.println("\nInvalid Input Please Try Again\n");
             System.out.print("Type Your Action Number: ");
-            if (scanner.hasNext()) {
-                str = scanner.next();
-            }
+            str = scanner.next();
+            
         }
         System.out.println();
-        scanner.close();
         return Integer.parseInt(str);
     }
     

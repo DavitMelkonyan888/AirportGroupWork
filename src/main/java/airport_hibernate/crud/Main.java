@@ -14,9 +14,7 @@ import org.hibernate.SessionFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Scanner;
-import java.util.Set;
 
 import static airport_hibernate.validation.Validation.*;
 
@@ -279,7 +277,7 @@ public class Main {
     }
     
     public static void main (String[] args) {
-        try (SessionFactory ignored = getSessionFactory()) {
+        try (SessionFactory ignored = getSessionFactory(); Scanner ignored1 = new Scanner(System.in)) {
             int v;
             do {
                 Menu.mainMenu();
@@ -303,7 +301,6 @@ public class Main {
     private static String getTown(){
         Scanner scanner = new Scanner(System.in);
         String town = scanner.next();
-        scanner.close();
         return town;
     }
 }
