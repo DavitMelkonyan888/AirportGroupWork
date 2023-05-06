@@ -75,9 +75,10 @@ public class Main {
                     printList(passengerService.getAll(), passengerService);
                     break;
                 case 3:
-
+                    printList(getObj(passengerService), passengerService);
                     break;
                 case 4:
+
                     break;
                 case 5:
                     Menu.prevMenu();
@@ -121,8 +122,10 @@ public class Main {
                     System.out.println(companyService.toString(getValidCompanyById()) + '\n');
                     break;
                 case 2:
+
                     break;
                 case 3:
+
                     break;
                 case 4:
                     Menu.prevMenu();
