@@ -8,6 +8,11 @@ import airport_hibernate.service.service_classes.PassengerService;
 import airport_hibernate.service.service_classes.TripService;
 import airport_hibernate.service.single_ton_objects.SingleTonService;
 import org.hibernate.SessionFactory;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static airport_hibernate.validation.Validation.*;
 
@@ -67,8 +72,10 @@ public class Main {
                     System.out.println(passengerService.toString(getValidPassengerById()) + '\n');
                     break;
                 case 2:
+                    printList(passengerService.getAll(), passengerService);
                     break;
                 case 3:
+
                     break;
                 case 4:
                     break;
@@ -272,4 +279,14 @@ public class Main {
             } while (v != 4);
         }
     }
+    private static <T> void printList(@NotNull Collection<? extends T> list, Service service){
+        for (T obj  : list){
+            System.out.println(service.toString(obj));
+        }
+    }
+
+    private static boolean valid(final int limit, final int offset, final String str) {
+        return limit > 0 && offset > 0 && str != null && !str.isEmpty();
+    }
 }
+
