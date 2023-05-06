@@ -16,7 +16,15 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     
     // Load Hibernate configuration
     private final SessionFactory sessionFactory = getSessionFactory();
-    
+    private static PassengerService passengerService;
+
+    private PassengerService(){}
+
+    public static PassengerService getInstance() {
+        if (passengerService == null)
+            return new PassengerService();
+        return passengerService;
+    }
     /**
      * @param tripId Trip ID
      * @return List <Passenger>

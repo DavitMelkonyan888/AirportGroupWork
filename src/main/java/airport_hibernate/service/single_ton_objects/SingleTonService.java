@@ -5,9 +5,9 @@ import airport_hibernate.service.service_classes.PassengerService;
 import airport_hibernate.service.service_classes.TripService;
 
 public class SingleTonService {
-    private static final CompanyService COMPANY_SERVICE = new CompanyService();
-    private static final PassengerService PASSENGER_SERVICE = new PassengerService();
-    private static final TripService TRIP_SERVICE = new TripService();
+    private static final CompanyService COMPANY_SERVICE = CompanyService.getInstance();
+    private static final PassengerService PASSENGER_SERVICE = PassengerService.getInstance();
+    private static final TripService TRIP_SERVICE = TripService.getInstance();
 
     public static CompanyService getCompanyService() {
         return COMPANY_SERVICE;

@@ -8,9 +8,9 @@
 
         <!-- Connection settings -->
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/AirportGroupWork</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/Hibernate</property>
         <property name="hibernate.connection.username">postgres</property>
-        <property name="hibernate.connection.password">sql123</property>
+        <property name="hibernate.connection.password">manukpoloz2000</property>
 
         <!-- SQL dialect -->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
@@ -27,6 +27,11 @@
         <mapping class="airport_hibernate.pojo_classes.Passenger"/>
         <mapping class="airport_hibernate.pojo_classes.PassInTrip"/>
         <mapping class="airport_hibernate.pojo_classes.Trip"/>
+
+        <!--embeddable class="airport_hibernate.pojo_classes.Address">
+            <attribute name="city"/>
+            <attribute name="country"/>
+        </embeddable-->
 
     </session-factory>
 </hibernate-configuration>

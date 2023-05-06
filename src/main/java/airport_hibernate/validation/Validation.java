@@ -5,6 +5,7 @@ import airport_hibernate.pojo_classes.*;
 import airport_hibernate.service.service_classes.CompanyService;
 import airport_hibernate.service.service_classes.PassengerService;
 import airport_hibernate.service.service_classes.TripService;
+import airport_hibernate.service.single_ton_objects.SingleTonService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -94,7 +95,7 @@ public class Validation {
         str = scanner.next();
         if (str.matches(regex)){
             id = Integer.parseInt(str);
-            passenger = new PassengerService().getById(id);
+            passenger = SingleTonService.getPassengerService().getById(id);
         }
         while(!str.matches(regex) || passenger == null){
             System.out.println("\nInvalid Id Please Try Again\n");
@@ -102,7 +103,7 @@ public class Validation {
             str = scanner.next();
             if (str.matches(regex)){
                 id = Integer.parseInt(str);
-                passenger = new PassengerService().getById(id);
+                passenger = SingleTonService.getPassengerService().getById(id);
             }
         }
         return passenger;
@@ -139,7 +140,7 @@ public class Validation {
         str = scanner.next();
         if (str.matches(regex)){
             id = Integer.parseInt(str);
-            company = new CompanyService().getById(id);
+            company = SingleTonService.getCompanyService().getById(id);
         }
         while(!str.matches(regex) || company == null){
             System.out.println("\nInvalid Id Please Try Again\n");
@@ -147,7 +148,7 @@ public class Validation {
             str = scanner.next();
             if (str.matches(regex)){
                 id = Integer.parseInt(str);
-                company = new CompanyService().getById(id);
+                company = SingleTonService.getCompanyService().getById(id);
             }
         }
         return company;
@@ -184,7 +185,7 @@ public class Validation {
         str = scanner.next();
         if (str.matches(regex)){
             id = Integer.parseInt(str);
-            trip = new TripService().getById(id);
+            trip = SingleTonService.getTripService().getById(id);
         }
         while(!str.matches(regex) || trip == null){
             System.out.println("\nInvalid Id Please Try Again\n");
@@ -192,7 +193,7 @@ public class Validation {
             str = scanner.next();
             if (str.matches(regex)){
                 id = Integer.parseInt(str);
-                trip = new TripService().getById(id);
+                trip = SingleTonService.getTripService().getById(id);
             }
         }
         return trip;

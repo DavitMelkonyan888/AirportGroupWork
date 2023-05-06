@@ -6,6 +6,7 @@ import airport_hibernate.service.abstract_service.Service;
 import airport_hibernate.service.service_classes.CompanyService;
 import airport_hibernate.service.service_classes.PassengerService;
 import airport_hibernate.service.service_classes.TripService;
+import airport_hibernate.service.single_ton_objects.SingleTonService;
 import org.hibernate.SessionFactory;
 
 import static airport_hibernate.validation.Validation.*;
@@ -13,7 +14,7 @@ import static airport_hibernate.validation.Validation.*;
 public class Main {
     
     private enum Services{
-        PASSENGER, COMPANY, TRIP;
+        PASSENGER, COMPANY, TRIP
     }
     
     private static void crud(Services service) {
@@ -24,30 +25,30 @@ public class Main {
             switch (v) {
                 case 1 -> {
                     switch (service) {
-                        case PASSENGER -> serviceCreate(new PassengerService());
-                        case COMPANY -> serviceCreate(new CompanyService());
-                        case TRIP -> serviceCreate(new TripService());
+                        case PASSENGER -> serviceCreate(SingleTonService.getPassengerService());
+                        case COMPANY -> serviceCreate(SingleTonService.getCompanyService());
+                        case TRIP -> serviceCreate(SingleTonService.getTripService());
                     }
                 }
                 case 2 -> {
                     switch (service) {
-                        case PASSENGER -> passengerRead(new PassengerService());
-                        case COMPANY -> companyRead(new CompanyService());
-                        case TRIP -> tripRead(new TripService());
+                        case PASSENGER -> passengerRead(SingleTonService.getPassengerService());
+                        case COMPANY -> companyRead(SingleTonService.getCompanyService());
+                        case TRIP -> tripRead(SingleTonService.getTripService());
                     }
                 }
                 case 3 -> {
                     switch (service) {
-                        case PASSENGER -> passengerUpdate(new PassengerService());
-                        case COMPANY -> companyUpdate(new CompanyService());
-                        case TRIP -> tripUpdate(new TripService());
+                        case PASSENGER -> passengerUpdate(SingleTonService.getPassengerService());
+                        case COMPANY -> companyUpdate(SingleTonService.getCompanyService());
+                        case TRIP -> tripUpdate(SingleTonService.getTripService());
                     }
                 }
                 case 4 -> {
                     switch (service) {
-                        case PASSENGER -> serviceDelete(new PassengerService());
-                        case COMPANY -> serviceDelete(new CompanyService());
-                        case TRIP -> serviceDelete(new TripService());
+                        case PASSENGER -> serviceDelete(SingleTonService.getPassengerService());
+                        case COMPANY -> serviceDelete(SingleTonService.getCompanyService());
+                        case TRIP -> serviceDelete(SingleTonService.getTripService());
                     }
                 }
                 case 5 -> Menu.prevMenu();
@@ -198,7 +199,7 @@ public class Main {
             v = getValidIntForSwitch();
             switch (v) {
                 case 1:
-                    createRow(service);
+                    addRow(service);
                     break;
                 case 2:
                     Menu.prevMenu();
@@ -209,7 +210,7 @@ public class Main {
         } while (v != 2);
     }
     
-    private static <T extends Service> void createRow(T service){
+    private static <T extends Service> void addRow(T service){
         if (service instanceof CompanyService){
             long id = getValidCompanyId();
             service.delete(id);
@@ -243,6 +244,8 @@ public class Main {
     private static <T extends Service> void deleteRow(T service){
         if (service instanceof CompanyService){
             long id = getValidCompanyId();
+            // checking that company has reference to the another table has prints message
+            // do you want to delete another table row where company id is referring to...
             service.delete(id);
         } else if (service instanceof PassengerService){
             long id = getValidPassengerId();

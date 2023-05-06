@@ -13,7 +13,14 @@ public class CompanyService implements Service <Company> {
     
     // Load Hibernate configuration
     private final SessionFactory sessionFactory = getSessionFactory();
-    
+    private static  CompanyService companyService;
+    private CompanyService(){}
+
+    public static CompanyService getInstance() {
+        if (companyService == null)
+            return new CompanyService();
+        return companyService;
+    }
     /**
      * @param id
      * @return

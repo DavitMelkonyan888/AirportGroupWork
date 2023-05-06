@@ -14,7 +14,17 @@ public class TripService implements airport_hibernate.service.abstract_service.T
     
     // Load Hibernate configuration
     private final SessionFactory sessionFactory = getSessionFactory();
-    
+
+    private static TripService tripService;
+
+    private TripService(){}
+
+    public static TripService getInstance() {
+        if (tripService == null)
+            return new TripService();
+        return tripService;
+    }
+
     /**
      * @param id
      * @return
