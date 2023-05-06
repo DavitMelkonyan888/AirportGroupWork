@@ -9,7 +9,7 @@ import airport_hibernate.service.abstract_service.Service;
 import airport_hibernate.service.service_classes.CompanyService;
 import airport_hibernate.service.service_classes.PassengerService;
 import airport_hibernate.service.service_classes.TripService;
-import airport_hibernate.service.single_tone_objects.SingleTonService;
+import airport_hibernate.service.single_ton_objects.SingleTonService;
 import org.hibernate.SessionFactory;
 import org.jetbrains.annotations.NotNull;
 
@@ -80,7 +80,7 @@ public class Main {
                     printList(passengerService.getAll(), passengerService);
                     break;
                 case 3:
-
+                    printList(getObj(passengerService), passengerService);
                     break;
                 case 4:
                     long tripId = getValidTripId();
@@ -132,6 +132,7 @@ public class Main {
                     printList(companyService.getAll(), companyService);
                     break;
                 case 3:
+
                     break;
                 case 4:
                     Menu.prevMenu();
