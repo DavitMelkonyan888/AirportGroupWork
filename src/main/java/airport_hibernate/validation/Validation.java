@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.sql.Date;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Validation {
     
@@ -18,11 +19,16 @@ public class Validation {
     public static int getValidIntForSwitch(){
         String  regex   = "\\d+";
         Scanner scanner = new Scanner(System.in);
-        String  str     = scanner.next();
+        String str = "";
+        if (!scanner.hasNext()) {
+            str = scanner.next();
+        }
         while(!str.matches(regex)){
             System.out.println("\nInvalid Input Please Try Again\n");
             System.out.print("Type Your Action Number: ");
-            str = scanner.next();
+            if (scanner.hasNext()) {
+                str = scanner.next();
+            }
         }
         System.out.println();
         scanner.close();
@@ -151,5 +157,17 @@ public class Validation {
         }
         company.setFoundingDate(Date.valueOf(dateString));
         return company;
+    }
+    
+    public static <T> Set <T> getObj(@NotNull Service<T> service){
+        Scanner scInt = new Scanner(System.in);
+        Scanner scStr = new Scanner(System.in);
+        System.out.print("ENTER LIMIT ? > 0 -> ");
+        final int limit = scInt.nextInt();
+        System.out.print("ENTER OFFSET ? > 0 -> ");
+        final int offset = scInt.nextInt();
+        System.out.print("ENTER COLUMN CAME -> ");
+        final String sortColumn = scStr.next();
+        return service.get(limit, offset, sortColumn);
     }
 }
