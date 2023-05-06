@@ -2,16 +2,20 @@ package airport_hibernate.crud;
 
 import static airport_hibernate.connection_to_db.Connection.getSessionFactory;
 
+import airport_hibernate.pojo_classes.Company;
+import airport_hibernate.pojo_classes.Passenger;
+import airport_hibernate.pojo_classes.Trip;
 import airport_hibernate.service.abstract_service.Service;
 import airport_hibernate.service.service_classes.CompanyService;
 import airport_hibernate.service.service_classes.PassengerService;
 import airport_hibernate.service.service_classes.TripService;
-import airport_hibernate.service.single_ton_objects.SingleTonService;
+import airport_hibernate.service.single_tone_objects.SingleTonService;
 import org.hibernate.SessionFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
 import static airport_hibernate.validation.Validation.*;
@@ -63,13 +67,14 @@ public class Main {
     }
     
     private static void passengerRead(final PassengerService passengerService){
+        final Passenger passenger = new Passenger();
         int v;
         do {
             Menu.subMenuPassengersRead();
             v = getValidIntForSwitch();
             switch (v) {
                 case 1:
-                    System.out.println(passengerService.toString(getValidPassengerById()) + '\n');
+                    System.out.println(passengerService.toString(getValidPOJOById(passenger, passengerService)) + '\n');
                     break;
                 case 2:
                     printList(passengerService.getAll(), passengerService);
@@ -78,6 +83,8 @@ public class Main {
 
                     break;
                 case 4:
+                    long tripId = getValidTripId();
+                    printList(passengerService.getPassengersOfTrip(tripId), passengerService);
                     break;
                 case 5:
                     Menu.prevMenu();
@@ -112,15 +119,17 @@ public class Main {
     }
     
     private static void companyRead(CompanyService companyService){
+        final Company company = new Company();
         int v;
         do {
             Menu.subMenuCompaniesRead();
             v = getValidIntForSwitch();
             switch (v) {
                 case 1:
-                    System.out.println(companyService.toString(getValidCompanyById()) + '\n');
+                    System.out.println(companyService.toString(getValidPOJOById(company, companyService)) + '\n');
                     break;
                 case 2:
+                    printList(companyService.getAll(), companyService);
                     break;
                 case 3:
                     break;
@@ -151,21 +160,25 @@ public class Main {
     }
     
     private static void tripRead(TripService tripService){
+        final Trip trip = new Trip();
         int v;
         do {
             Menu.subMenuTripsRead();
             v = getValidIntForSwitch();
             switch (v) {
                 case 1:
-                    System.out.println(tripService.toString(getValidTripById()) + '\n');
+                    System.out.println(tripService.toString(getValidPOJOById(trip, tripService)) + '\n');
                     break;
                 case 2:
+                    printList(tripService.getAll(), tripService);
                     break;
                 case 3:
                     break;
                 case 4:
+                    printList(tripService.getTripsFrom(getTown()), tripService);
                     break;
                 case 5:
+                    printList(tripService.getTripsTo(getTown()), tripService);
                     break;
                 case 6:
                     Menu.prevMenu();
@@ -284,9 +297,12 @@ public class Main {
             System.out.println(service.toString(obj));
         }
     }
-
-    private static boolean valid(final int limit, final int offset, final String str) {
-        return limit > 0 && offset > 0 && str != null && !str.isEmpty();
+    
+    private static String getTown(){
+        Scanner scanner = new Scanner(System.in);
+        String town = scanner.next();
+        scanner.close();
+        return town;
     }
 }
 

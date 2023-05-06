@@ -2,8 +2,6 @@ package airport_hibernate.pojo_classes;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Embeddable
 public class Address {
     

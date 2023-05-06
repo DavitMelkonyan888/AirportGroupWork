@@ -8,9 +8,9 @@
 
         <!-- Connection settings -->
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/Hibernate</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/AirportGroupWork</property>
         <property name="hibernate.connection.username">postgres</property>
-        <property name="hibernate.connection.password">manukpoloz2000</property>
+        <property name="hibernate.connection.password">sql123</property>
 
         <!-- SQL dialect -->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
@@ -19,7 +19,7 @@
         <property name="show_sql">true</property>
 
         <!-- Update database on startup -->
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
 
         <!-- Annotated entity classes -->
         <mapping class="airport_hibernate.pojo_classes.Address"/>

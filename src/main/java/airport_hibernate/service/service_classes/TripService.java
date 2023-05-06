@@ -1,7 +1,7 @@
 package airport_hibernate.service.service_classes;
 
 import static airport_hibernate.connection_to_db.Connection.getSessionFactory;
-import static airport_hibernate.service.single_ton_objects.SingleTonService.*;
+import static airport_hibernate.service.single_tone_objects.SingleTonService.*;
 import airport_hibernate.pojo_classes.Trip;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,7 +21,7 @@ public class TripService implements airport_hibernate.service.abstract_service.T
 
     public static TripService getInstance() {
         if (tripService == null)
-            return new TripService();
+            tripService = new TripService();
         return tripService;
     }
 

@@ -8,6 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -22,7 +23,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
 
     public static PassengerService getInstance() {
         if (passengerService == null)
-            return new PassengerService();
+            passengerService = new PassengerService();
         return passengerService;
     }
     /**
@@ -31,7 +32,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      */
     @Override
     public List <Passenger> getPassengersOfTrip (final long tripId) {
-        List<Passenger> passengers = null;
+        List<Passenger> passengers;
         try(final Session session = sessionFactory.openSession()) {
             List<PassInTrip> passInTrips = session.createQuery("from PassInTrip pit where pit.trip.id = ?1", PassInTrip.class)
                     .setParameter(1, tripId)
@@ -143,7 +144,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      * @param id
      */
     @Override
-    public void update (final Passenger passenger, final long id) {
+    public void update (final @NotNull Passenger passenger, final long id) {
         Transaction transaction = null;
         try(Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
@@ -182,7 +183,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      * @return
      */
     @Override
-    public String toString (final Passenger passenger) {
+    public String toString (final @NotNull Passenger passenger) {
         return "Passenger{ " +
                 "id= " + passenger.getId() +
                 ", name= '" + passenger.getName() + '\'' +

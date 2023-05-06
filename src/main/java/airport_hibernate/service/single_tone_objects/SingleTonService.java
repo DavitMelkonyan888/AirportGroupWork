@@ -1,4 +1,4 @@
-package airport_hibernate.service.single_ton_objects;
+package airport_hibernate.service.single_tone_objects;
 
 import airport_hibernate.service.service_classes.CompanyService;
 import airport_hibernate.service.service_classes.PassengerService;

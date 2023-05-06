@@ -18,7 +18,7 @@ public class CompanyService implements Service <Company> {
 
     public static CompanyService getInstance() {
         if (companyService == null)
-            return new CompanyService();
+            companyService = new CompanyService();
         return companyService;
     }
     /**

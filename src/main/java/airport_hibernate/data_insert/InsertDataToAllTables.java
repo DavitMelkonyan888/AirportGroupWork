@@ -18,29 +18,29 @@ public class InsertDataToAllTables {
     private static final SessionFactory sessionFactory = getSessionFactory();
     private static final Session session = sessionFactory.openSession();
     
-    private static void AddressFileImporter(final String path) {
-        // Open file for reading
-        try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
-
-            // Read each line of the file
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Split the line into fields
-                String[] fields = line.split(",");
-                
-                // Create a new Address object with filled data
-                Address address = new Address(fields[2], fields[3]);
-                
-                // Save the object to the database
-                Transaction transaction = session.beginTransaction();
-                session.save(address);
-                transaction.commit();
-            }
-
-        } catch (HibernateException | IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    private static void AddressFileImporter(final String path) {
+//        // Open file for reading
+//        try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
+//
+//            // Read each line of the file
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                // Split the line into fields
+//                String[] fields = line.split(",");
+//
+//                // Create a new Address object with filled data
+//                Address address = new Address(fields[2], fields[3]);
+//
+//                // Save the object to the database
+//                Transaction transaction = session.beginTransaction();
+//                session.save(address);
+//                transaction.commit();
+//            }
+//
+//        } catch (HibernateException | IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
     
     private static void CompanyFileImporter(String path) {
             // Open file for reading
@@ -87,9 +87,8 @@ public class InsertDataToAllTables {
             while ((line = reader.readLine()) != null) {
                 // Split the line into fields
                 String[] fields = line.split(",");
-                
                 // Create a new Passenger object with filled data
-                Passenger passenger = new Passenger(fields[0], fields[1], session.get(Address.class, counterForAddressId++));
+                Passenger passenger = new Passenger(fields[0], fields[1], new Address(fields[2], fields[3]));
                 
                 // Save the object to the database
                 Transaction transaction = session.beginTransaction();
@@ -106,11 +105,8 @@ public class InsertDataToAllTables {
     
     private static void PassInTripFileImporter(String path) {
         
-        
-        
         try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
             // Open file for reading
-
             
             // Read each line of the file
             String line;
@@ -132,8 +128,6 @@ public class InsertDataToAllTables {
                 session.save(passInTrip);
                 transaction.commit();
             }
-            
-
         } catch (HibernateException | IOException e) {
             e.printStackTrace();
         }
@@ -141,11 +135,8 @@ public class InsertDataToAllTables {
     
     private static void TripFileImporter(String path) {
         
-
         // Open file for reading
         try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
-
-
             
             // Read each line of the file
             String line;
@@ -180,7 +171,7 @@ public class InsertDataToAllTables {
         // Close the Hibernate session
         try{
             CompanyFileImporter("src/main/resources/datas/companies.txt");
-            AddressFileImporter("src/main/resources/datas/passengers.txt");
+            //AddressFileImporter("src/main/resources/datas/passengers.txt");
             PassengerFileImporter("src/main/resources/datas/passengers.txt");
             TripFileImporter("src/main/resources/datas/trip.txt");
             PassInTripFileImporter("src/main/resources/datas/pass_in_trip.txt");
