@@ -132,7 +132,7 @@ public class Main {
                     printList(companyService.getAll(), companyService);
                     break;
                 case 3:
-
+                    printList(getObj(companyService), companyService);
                     break;
                 case 4:
                     Menu.prevMenu();
@@ -174,6 +174,7 @@ public class Main {
                     printList(tripService.getAll(), tripService);
                     break;
                 case 3:
+                    printList(getObj(tripService), tripService);
                     break;
                 case 4:
                     printList(tripService.getTripsFrom(getTown()), tripService);
