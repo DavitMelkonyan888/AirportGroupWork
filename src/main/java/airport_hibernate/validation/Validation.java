@@ -16,11 +16,11 @@ public class Validation {
     
     private final static SessionFactory sessionFactory = getSessionFactory();
     
-    public static int getValidIntForSwitch(){
+    public static int getValidIntForSwitch(final int max){
         String  regex   = "\\d+";
         Scanner scanner = new Scanner(System.in);
         String  str = scanner.next();
-        while(!str.matches(regex)){
+        while(!str.matches(regex) ||  Integer.parseInt(str) > max || Integer.parseInt(str) < 1){
             System.out.println("\nInvalid Input Please Try Again\n");
             System.out.print("Type Your Action Number: ");
             str = scanner.next();

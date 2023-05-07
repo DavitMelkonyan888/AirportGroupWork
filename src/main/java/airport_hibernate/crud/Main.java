@@ -28,7 +28,7 @@ public class Main {
         int v;
         do {
             Menu.subMenu();
-            v = getValidIntForSwitch();
+            v = getValidIntForSwitch(5);
             switch (v) {
                 case 1 -> {
                     switch (service) {
@@ -59,7 +59,6 @@ public class Main {
                     }
                 }
                 case 5 -> Menu.prevMenu();
-                default -> System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while(v != 5);
     }
@@ -69,26 +68,17 @@ public class Main {
         int v;
         do {
             Menu.subMenuPassengersRead();
-            v = getValidIntForSwitch();
+            v = getValidIntForSwitch(5);
             switch (v) {
-                case 1:
-                    System.out.println(passengerService.toString(getValidPOJOById(passenger, passengerService)) + '\n');
-                    break;
-                case 2:
-                    printList(passengerService.getAll(), passengerService);
-                    break;
-                case 3:
-                    printList(getObj(passengerService), passengerService);
-                    break;
-                case 4:
+                case 1 ->
+                        System.out.println(passengerService.toString(getValidPOJOById(passenger, passengerService)) + '\n');
+                case 2 -> printList(passengerService.getAll(), passengerService);
+                case 3 -> printList(getObj(passengerService), passengerService);
+                case 4 -> {
                     long tripId = getValidTripId();
                     printList(passengerService.getPassengersOfTrip(tripId), passengerService);
-                    break;
-                case 5:
-                    Menu.prevMenu();
-                    break;
-                default:
-                    System.out.println("\nInvalid Input Please Try Again\n");
+                }
+                case 5 -> Menu.prevMenu();
             }
         } while (v != 5);
     }
@@ -97,7 +87,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuPassengersUpdate();
-            v = getValidIntForSwitch();
+            v = getValidIntForSwitch(5);
             switch (v) {
                 case 1:
                     break;
@@ -109,9 +99,6 @@ public class Main {
                     break;
                 case 5:
                     Menu.prevMenu();
-                    break;
-                default:
-                    System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 5);
     }
@@ -121,7 +108,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuCompaniesRead();
-            v = getValidIntForSwitch();
+            v = getValidIntForSwitch(4);
             switch (v) {
                 case 1:
                     System.out.println(companyService.toString(getValidPOJOById(company, companyService)) + '\n');
@@ -134,9 +121,6 @@ public class Main {
                     break;
                 case 4:
                     Menu.prevMenu();
-                    break;
-                default:
-                    System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 4);
     }
@@ -145,15 +129,12 @@ public class Main {
         int v;
         do {
             Menu.subMenuCompaniesUpdate();
-            v = getValidIntForSwitch();
+            v = getValidIntForSwitch(2);
             switch (v) {
                 case 1:
                     break;
                 case 2:
                     Menu.prevMenu();
-                    break;
-                default:
-                    System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 2);
     }
@@ -163,7 +144,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuTripsRead();
-            v = getValidIntForSwitch();
+            v = getValidIntForSwitch(6);
             switch (v) {
                 case 1:
                     System.out.println(tripService.toString(getValidPOJOById(trip, tripService)) + '\n');
@@ -182,9 +163,6 @@ public class Main {
                     break;
                 case 6:
                     Menu.prevMenu();
-                    break;
-                default:
-                    System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 6);
     }
@@ -193,7 +171,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuTripsUpdate();
-            v = getValidIntForSwitch();
+            v = getValidIntForSwitch(5);
             switch (v) {
                 case 1:
                     break;
@@ -205,9 +183,6 @@ public class Main {
                     break;
                 case 5:
                     Menu.prevMenu();
-                    break;
-                default:
-                    System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 5);
     }
@@ -216,16 +191,13 @@ public class Main {
         int v;
         do {
             Menu.subMenuCreate();
-            v = getValidIntForSwitch();
+            v = getValidIntForSwitch(2);
             switch (v) {
                 case 1:
                     addRow(service);
                     break;
                 case 2:
                     Menu.prevMenu();
-                    break;
-                default:
-                    System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 2);
     }
@@ -247,16 +219,13 @@ public class Main {
         int v;
         do {
             Menu.subMenuDelete();
-            v = getValidIntForSwitch();
+            v = getValidIntForSwitch(2);
             switch (v) {
                 case 1:
                     deleteRow(service);
                     break;
                 case 2:
                     Menu.prevMenu();
-                    break;
-                default:
-                    System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 2);
     }
@@ -281,13 +250,13 @@ public class Main {
             int v;
             do {
                 Menu.mainMenu();
-                v = getValidIntForSwitch();
+                v = getValidIntForSwitch(5);
                 switch (v) {
                     case 1 -> crud(Services.PASSENGER);
                     case 2 -> crud(Services.COMPANY);
                     case 3 -> crud(Services.TRIP);
+                    //case 4 -> clear();
                     case 4 -> System.out.println("Exited Successfully");
-                    default -> System.out.println("\nInvalid Input Please Try Again\n");
                 }
             } while (v != 4);
         }
@@ -302,6 +271,14 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String town = scanner.next();
         return town;
+    }
+    
+    private static void clear(){
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (Exception ex) {
+            System.out.println("Failed to clear terminal screen: " + ex.getMessage());
+        }
     }
 }
 

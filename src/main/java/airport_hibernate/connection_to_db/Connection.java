@@ -9,6 +9,8 @@ public class Connection {
     
     private static final SessionFactory sessionFactory = configuration.buildSessionFactory();
     
+    private Connection(){}
+    
     public static SessionFactory getSessionFactory(){
         return sessionFactory;
     }

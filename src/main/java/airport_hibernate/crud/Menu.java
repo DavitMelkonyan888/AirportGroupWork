@@ -5,6 +5,7 @@ public class Menu {
         System.out.println("Press 1  For Passengers");
         System.out.println("Press 2  For Companies");
         System.out.println("Press 3  For Trips");
+        //System.out.println("Press 4  For Clearing Screen");
         System.out.println("Press 4  For Exit");
         System.out.print("Type Your Action Number: ");
     }
@@ -82,6 +83,6 @@ public class Menu {
     }
     
     public static void prevMenu(){
-        System.out.println("\nPrevious Menu\n");
+        System.out.println("Previous Menu\n");
     }
 }
