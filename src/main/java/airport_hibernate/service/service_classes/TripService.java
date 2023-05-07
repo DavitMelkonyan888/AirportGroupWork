@@ -2,9 +2,13 @@ package airport_hibernate.service.service_classes;
 
 import static airport_hibernate.connection_to_db.Connection.getSessionFactory;
 import static airport_hibernate.service.single_tone_objects.SingleTonService.*;
+
+import airport_hibernate.pojo_classes.PassInTrip;
 import airport_hibernate.pojo_classes.Trip;
+import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -84,12 +88,11 @@ public class TripService implements airport_hibernate.service.abstract_service.T
     
     /**
      * @param trip
-     * @param id
      */
     @Override
-    public void update (final Trip trip, final long id) {
+    public void update (final Trip trip) {
         try(final Session session = sessionFactory.openSession()){
-            Trip          ent     = session.get(Trip.class, id);
+            Trip          ent     = session.get(Trip.class, trip.getId());
             ent.setTownFrom(trip.getTownFrom());
             ent.setTownTo(trip.getTownTo());
             ent.setTimeOut(trip.getTimeOut());
@@ -102,10 +105,25 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      * @param id
      */
     @Override
-    public void delete (final long id) {
-        try(final Session session = sessionFactory.openSession()){
-            Trip          trip    = session.get(Trip.class, id);
-            session.delete(trip);
+    public void delete(long id) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            Trip trip = session.get(Trip.class, id);
+            for (PassInTrip i : trip.getPassInTrips()) {
+                Query query = session.createQuery("delete from PassInTrip where id = :id");
+                query.setParameter("id", i.getId());
+                query.executeUpdate();
+            }
+            Query query = session.createQuery("delete from Trip where id = :id");
+            query.setParameter("id", trip.getId());
+            query.executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw e;
         }
     }
     

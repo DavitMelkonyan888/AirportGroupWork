@@ -204,14 +204,14 @@ public class Main {
     
     private static <T extends Service> void addRow(T service){
         if (service instanceof CompanyService){
-            long id = getValidCompanyId();
-            service.delete(id);
+            Company company = getValidCompany();
+            service.save(company);
         } else if (service instanceof PassengerService){
-            long id = getValidPassengerId();
-            service.delete(id);
+            Passenger passenger = getValidPassenger();
+            service.save(passenger);
         } else {
-            long id = getValidTripId();
-            service.delete(id);
+            Trip trip = getValidTrip();
+            service.save(trip);
         }
     }
     

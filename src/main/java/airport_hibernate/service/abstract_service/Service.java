@@ -8,7 +8,7 @@ public interface Service <T> {
     Set<T> getAll();
     Set<T> get(final int limit, final int offset, final String sort);
     void save(final T object);
-    void update(final T object, final long id);
+    void update(final T object);
     void delete(final long id);
     String toString(final T object);
     default void print(final Collection <T> collection){

@@ -50,4 +50,12 @@ public class Company {
     public void setFoundingDate (Date foundingDate) {
         this.foundingDate = foundingDate;
     }
+    
+    public List <Trip> getTrips () {
+        return trips;
+    }
+    
+    public void setTrips (List <Trip> trips) {
+        this.trips = trips;
+    }
 }

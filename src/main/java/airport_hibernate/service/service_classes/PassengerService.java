@@ -116,8 +116,14 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     public Set <Passenger> get (final int limit, final int offset, final String sortBy) {
         Set<Passenger> passengers;
         try(final Session session = sessionFactory.openSession()) {
-            passengers = new LinkedHashSet <>(session.createQuery("from Passenger ORDER BY " + sortBy)
-                    .setFirstResult(offset).setMaxResults(limit).getResultList());
+            String queryString = "FROM Passenger";
+            if (sortBy != null) {
+                queryString += " ORDER BY " + sortBy;
+            }
+            passengers = new LinkedHashSet <>(session.createQuery(queryString)
+                    .setFirstResult(offset)
+                    .setMaxResults(limit)
+                    .getResultList());
         }
         return passengers;
     }
@@ -141,14 +147,13 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     
     /**
      * @param passenger
-     * @param id
      */
     @Override
-    public void update (final @NotNull Passenger passenger, final long id) {
+    public void update (final @NotNull Passenger passenger) {
         Transaction transaction = null;
         try(Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            Passenger ent = session.get(Passenger.class, id);
+            Passenger ent = session.get(Passenger.class, passenger.getId());
             ent.setAddress(passenger.getAddress());
             ent.setPhone(passenger.getPhone());
             session.update(ent);
@@ -157,7 +162,6 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
             assert transaction != null;
             e.printStackTrace();
         }
-
     }
     
     /**
@@ -169,13 +173,19 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
         try(Session session = sessionFactory.openSession()){
             transaction = session.beginTransaction();
             Passenger passenger = session.get(Passenger.class, id);
-            session.delete(passenger);
+            for (PassInTrip i: passenger.getPassInTrips()){
+                session.createQuery("Delete From PassInTrip Where id = :id")
+                        .setParameter("id", i.getId())
+                        .executeUpdate();
+            }
+            session.createQuery("Delete From Passenger Where id = :id")
+                    .setParameter("id", passenger.getId())
+                    .executeUpdate();
             transaction.commit();
         }catch (HibernateException e) {
             assert transaction != null;
             e.printStackTrace();
         }
-
     }
     
     /**

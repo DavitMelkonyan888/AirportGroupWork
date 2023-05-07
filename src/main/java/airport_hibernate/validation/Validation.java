@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -156,6 +157,56 @@ public class Validation {
         }
         company.setFoundingDate(Date.valueOf(dateString));
         return company;
+    }
+    
+    public static @NotNull Passenger getValidPassenger(){
+        Scanner scanner = new Scanner(System.in);
+        Passenger passenger = new Passenger();
+        String  regex   = "\\d{3}-\\d{3}-\\d{4}";
+        System.out.print("Enter Passenger Name: ");
+        passenger.setName(scanner.next());
+        System.out.print("Enter Passenger Phone Number(XXX-XXX-XXXX): ");
+        String phone = scanner.next();
+        while (!phone.matches(regex)){
+            System.out.println("\nInvalid Input Please Try Again\n");
+            System.out.print("Enter Passenger Phone Number(XXX-XXX-XXXX): ");
+            phone = scanner.next();
+        }
+        passenger.setPhone(phone);
+        System.out.print("Enter Passenger Country: ");
+        passenger.getAddress().setCountry(scanner.next());
+        System.out.print("Enter Passenger City: ");
+        passenger.getAddress().setCity(scanner.next());
+        return passenger;
+    }
+    
+    public static @NotNull Trip getValidTrip(){
+        Scanner scanner = new Scanner(System.in);
+        Trip trip = new Trip();
+        String  regex   = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}";
+        System.out.print("Enter Company Id: ");
+        trip.setCompany(getValidPOJOById(new Company(), SingleTonService.getCompanyService()));
+        System.out.print("Enter Town From City: ");
+        trip.setTownFrom(scanner.next());
+        System.out.print("Enter Town To City: ");
+        trip.setTownTo(scanner.next());
+        System.out.print("Enter Time Out(yyyy-mm-dd hh:mm:ss): ");
+        String dateString = scanner.next();
+        while (!dateString.matches(regex)){
+            System.out.println("\nInvalid Input Please Try Again\n");
+            System.out.print("Enter Time Out(yyyy-mm-dd hh:mm:ss): ");
+            dateString = scanner.next();
+        }
+        trip.setTimeOut(Timestamp.valueOf(dateString));
+        System.out.print("Enter Time In(yyyy-mm-dd hh:mm:ss): ");
+        dateString = scanner.next();
+        while (!dateString.matches(regex)){
+            System.out.println("\nInvalid Input Please Try Again\n");
+            System.out.print("Enter Time In(yyyy-mm-dd hh:mm:ss): ");
+            dateString = scanner.next();
+        }
+        trip.setTimeIn(Timestamp.valueOf(dateString));
+        return trip;
     }
     
     public static <T> Set <T> getObj(@NotNull Service<T> service, T obj){
