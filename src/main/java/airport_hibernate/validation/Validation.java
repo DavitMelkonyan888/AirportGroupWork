@@ -158,49 +158,36 @@ public class Validation {
         return company;
     }
     
-    public static <T> Set <T> getObj(@NotNull Service<T> service){
-
-        Scanner scInt = new Scanner(System.in);
-        System.out.print("ENTER LIMIT ? > 0 -> ");
-        final int limit = scInt.nextInt();
+    public static <T> Set <T> getObj(@NotNull Service<T> service, T obj){
+        final Session session = sessionFactory.openSession();
+        Long count = (Long) session.createQuery("select count(*) from " + obj.getClass().getSimpleName()).uniqueResult();
+        session.close();
         System.out.print("ENTER OFFSET ? > 0 -> ");
-        final int offset = scInt.nextInt();
+        final int offset = getValidIntForOffset(count-1);
+        System.out.print("ENTER LIMIT ? > 0 -> ");
+        final int limit = getValidIntForLimit();
         final String sortColumn;
 
 
         if (instanceOfServices(service) == 1)
-           sortColumn = columnNameT(printTableTripColumns());
-
-        else if (instanceOfServices(service) == 2) {
-            sortColumn = columnNameP(printPassengerTablesColumns());
-
-        } else {
             sortColumn = columnNameC(printCompanyTableColumns());
-        }
+        else if (instanceOfServices(service) == 2)
+            sortColumn = columnNameP(printPassengerTablesColumns());
+        else
+            sortColumn = columnNameT(printTableTripColumns());
+        
         return service.get(limit, offset, sortColumn);
     }
 
     private static int printPassengerTablesColumns() {
-
+        System.out.println("Order By");
         System.out.println("1. id");
         System.out.println("2. city");
         System.out.println("3. country");
         System.out.println("4. name");
         System.out.println("5. phone");
-        System.out.print("ENTER COLUMN CAME -> ");
-
-        String  regex   = "\\d+";
-        Scanner scanner = new Scanner(System.in);
-        String  str = scanner.next();
-        while(!str.matches(regex) ||  Integer.parseInt(str) > 5 || Integer.parseInt(str) < 1){
-            System.out.println("\nInvalid Input Please Try Again\n");
-            System.out.print("Type Your Action Number: ");
-            str = scanner.next();
-
-        }
-        System.out.println();
-        return Integer.parseInt(str);
-
+        System.out.print("ENTER COLUMN NUMBER -> ");
+        return getValidIntForSwitch(5);
     }
 
     public static int  printTableTripColumns(){
@@ -210,40 +197,16 @@ public class Validation {
         System.out.println("4. time_out");
         System.out.println("5. town_from");
         System.out.println("6. town_to");
-        System.out.print("ENTER COLUMN CAME -> ");
-
-        String  regex   = "\\d+";
-        Scanner scanner = new Scanner(System.in);
-        String  str = scanner.next();
-        while(!str.matches(regex) ||  Integer.parseInt(str) > 6 || Integer.parseInt(str) < 1){
-            System.out.println("\nInvalid Input Please Try Again\n");
-            System.out.print("Type Your Action Number: ");
-            str = scanner.next();
-
-        }
-        System.out.println();
-        return Integer.parseInt(str);
-
-
+        System.out.print("ENTER COLUMN NUMBER -> ");
+        return getValidIntForSwitch(6);
     }
 
     private static int printCompanyTableColumns() {
         System.out.println("1. founding_date");
         System.out.println("2. id");
         System.out.println("3. name");
-        System.out.print("ENTER COLUMN CAME -> ");
-
-        String  regex   = "\\d+";
-        Scanner scanner = new Scanner(System.in);
-        String  str = scanner.next();
-        while(!str.matches(regex) ||  Integer.parseInt(str) > 6 || Integer.parseInt(str) < 1){
-            System.out.println("\nInvalid Input Please Try Again\n");
-            System.out.print("Type Your Action Number: ");
-            str = scanner.next();
-
-        }
-        System.out.println();
-        return Integer.parseInt(str);
+        System.out.print("ENTER COLUMN NUMBER -> ");
+        return getValidIntForSwitch(3);
 
     }
 
@@ -260,17 +223,17 @@ public class Validation {
     private static @NotNull String columnNameT(final int columnNumber) {
         switch (columnNumber){
             case 1:
-                return "company_id";
+                return "company";
             case 2:
-                return "trip_id";
+                return "id";
             case 3:
-                return "time_in";
+                return "timeIn";
             case 4:
-                return "time_out";
+                return "timeOut";
             case 5:
-                return "town_from";
+                return "townFrom";
             case 6:
-                return "town_to";
+                return "townTo";
             default:
                 throw new IllegalArgumentException("CHGITEM VONC ES KARACE ANES VOR EXCEPTION QCI, MALADEC :)");
         }
@@ -282,9 +245,9 @@ public class Validation {
             case 1:
                 return "id";
             case 2:
-                return "city";
+                return "address.city";
             case 3:
-                return "country";
+                return "address.country";
             case 4:
                 return "name";
             case 5:
@@ -298,7 +261,7 @@ public class Validation {
     private static @NotNull String columnNameC(final int columnName){
         switch (columnName) {
             case 1:
-                return "founding_date";
+                return "foundingDate";
             case 2:
                 return "id";
             case 3:
@@ -306,5 +269,33 @@ public class Validation {
             default:
                 throw new IllegalArgumentException("CHGITEM VONC ES KARACE ANES VOR EXCEPTION QCI, MALADEC :)");
         }
+    }
+    
+    public static int getValidIntForOffset(long max){
+        final String  regex   = "\\d+";
+        final Scanner scanner = new Scanner(System.in);
+        System.out.print("Insert How Many Rows Should Be Skipped(0-" + max + "): ");
+        String  str = scanner.next();
+        while(!str.matches(regex) ||  Integer.parseInt(str) > max || Integer.parseInt(str) < 0){
+            System.out.println("\nInvalid Input Please Try Again\n");
+            System.out.print("Insert How Many Rows Should Be Skipped(0-" + max + "): ");
+            str = scanner.next();
+        }
+        System.out.println();
+        return Integer.parseInt(str);
+    }
+    
+    public static int getValidIntForLimit(){
+        final String  regex   = "\\d+";
+        final Scanner scanner = new Scanner(System.in);
+        System.out.print("Insert Maximum How Many Rows You Want To See: ");
+        String  str = scanner.next();
+        while(!str.matches(regex) || Integer.parseInt(str) < 1){
+            System.out.println("\nInvalid Input Please Try Again\n");
+            System.out.print("Insert Maximum How Many Rows You Want To See: ");
+            str = scanner.next();
+        }
+        System.out.println();
+        return Integer.parseInt(str);
     }
 }

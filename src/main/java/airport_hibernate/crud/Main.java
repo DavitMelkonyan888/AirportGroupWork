@@ -73,7 +73,7 @@ public class Main {
                 case 1 ->
                         System.out.println(passengerService.toString(getValidPOJOById(passenger, passengerService)) + '\n');
                 case 2 -> printList(passengerService.getAll(), passengerService);
-                case 3 -> printList(getObj(passengerService), passengerService);
+                case 3 -> printList(getObj(passengerService, new Passenger()), passengerService);
                 case 4 -> {
                     long tripId = getValidTripId();
                     printList(passengerService.getPassengersOfTrip(tripId), passengerService);
@@ -117,7 +117,7 @@ public class Main {
                     printList(companyService.getAll(), companyService);
                     break;
                 case 3:
-                    printList(getObj(companyService), companyService);
+                    printList(getObj(companyService, new Company()), companyService);
                     break;
                 case 4:
                     Menu.prevMenu();
@@ -153,7 +153,7 @@ public class Main {
                     printList(tripService.getAll(), tripService);
                     break;
                 case 3:
-                    printList(getObj(tripService), tripService);
+                    printList(getObj(tripService, new Trip()), tripService);
                     break;
                 case 4:
                     printList(tripService.getTripsFrom(getTown()), tripService);
