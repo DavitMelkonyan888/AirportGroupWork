@@ -5,7 +5,6 @@ public class Menu {
         System.out.println("Press 1  For Passengers");
         System.out.println("Press 2  For Companies");
         System.out.println("Press 3  For Trips");
-        //System.out.println("Press 4  For Clearing Screen");
         System.out.println("Press 4  For Exit");
         System.out.print("Type Your Action Number: ");
     }
@@ -46,11 +45,9 @@ public class Menu {
     }
 
     public static void subMenuTripsUpdate(){
-        System.out.println("Press 1  To Change Town From");
-        System.out.println("Press 2  To Change Town To");
-        System.out.println("Press 3  To Change Time Out");
-        System.out.println("Press 4  To Change Time In");
-        System.out.println("Press 5  For Previous Menu");
+        System.out.println("Press 1  To Change Time Out");
+        System.out.println("Press 2  To Change Time In");
+        System.out.println("Press 3  For Previous Menu");
         System.out.print("Type Your Action Number: ");
     }
     
