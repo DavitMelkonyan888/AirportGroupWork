@@ -5,6 +5,7 @@ import airport_hibernate.pojo_classes.Company;
 import airport_hibernate.pojo_classes.Trip;
 import airport_hibernate.service.abstract_service.Service;
 import airport_hibernate.service.single_tone_objects.SingleTonService;
+import airport_hibernate.validation.Validation;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -97,8 +98,12 @@ public class CompanyService implements Service <Company> {
         Transaction transaction = null;
         try(final Session session = sessionFactory.openSession()){
             transaction = session.beginTransaction();
-            session.update(company);
-            transaction.commit();
+            final long id = Validation.getInstance().getValidCompanyId();
+            if (getById(id) != null) {
+                company.setId(id);
+                session.update(company);
+                transaction.commit();
+            }
         }catch (HibernateException e) {
             assert transaction != null;
             e.printStackTrace();
