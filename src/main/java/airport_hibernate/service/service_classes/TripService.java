@@ -2,9 +2,14 @@ package airport_hibernate.service.service_classes;
 
 import static airport_hibernate.connection_to_db.Connection.getSessionFactory;
 import static airport_hibernate.service.single_tone_objects.SingleTonService.*;
+
+import airport_hibernate.pojo_classes.PassInTrip;
 import airport_hibernate.pojo_classes.Trip;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -58,6 +63,7 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public Set<Trip> get(final int limit, final int offset, final String sortBy) {
+
         Set<Trip> set;
         try(final Session session = sessionFactory.openSession()) {
             String queryString = "FROM Trip";
@@ -87,14 +93,15 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      * @param id
      */
     @Override
-    public void update (final Trip trip, final long id) {
+    public void update (final @NotNull Trip trip) {
+        Transaction transaction = null;
         try(final Session session = sessionFactory.openSession()){
-            Trip          ent     = session.get(Trip.class, id);
-            ent.setTownFrom(trip.getTownFrom());
-            ent.setTownTo(trip.getTownTo());
-            ent.setTimeOut(trip.getTimeOut());
-            ent.setTimeIn(trip.getTimeIn());
-            session.update(ent);
+            transaction = session.beginTransaction();
+            session.update(trip);
+            transaction.commit();
+        }catch (HibernateException e) {
+            assert transaction != null;
+            e.printStackTrace();
         }
     }
     
@@ -103,9 +110,18 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public void delete (final long id) {
+        Transaction transaction = null;
         try(final Session session = sessionFactory.openSession()){
+            transaction = session.beginTransaction();
             Trip          trip    = session.get(Trip.class, id);
+            for (PassInTrip pit: trip.getPassInTrips()) {
+                session.delete(pit);
+            }
             session.delete(trip);
+            transaction.commit();
+        }catch (HibernateException e) {
+            assert transaction.isActive();
+            e.printStackTrace();
         }
     }
     
@@ -114,7 +130,7 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      * @return
      */
     @Override
-    public String toString (final Trip trip) {
+    public String toString (final @NotNull Trip trip) {
         return "Trip{ " +
                 "id= " + trip.getId() +
                 ", company= " + getCompanyService().toString(trip.getCompany()) +
@@ -155,4 +171,7 @@ public class TripService implements airport_hibernate.service.abstract_service.T
         }
         return resultList;
     }
+
+
+
 }

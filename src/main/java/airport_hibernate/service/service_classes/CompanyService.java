@@ -2,9 +2,14 @@ package airport_hibernate.service.service_classes;
 
 import static airport_hibernate.connection_to_db.Connection.getSessionFactory;
 import airport_hibernate.pojo_classes.Company;
+import airport_hibernate.pojo_classes.Trip;
 import airport_hibernate.service.abstract_service.Service;
+import airport_hibernate.service.single_tone_objects.SingleTonService;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -26,7 +31,7 @@ public class CompanyService implements Service <Company> {
      * @return
      */
     @Override
-    public Company getById (long id) {
+    public  Company getById (long id) {
         Company company;
         try(final Session session = sessionFactory.openSession()) {
             company = session.get(Company.class, id);
@@ -73,21 +78,30 @@ public class CompanyService implements Service <Company> {
      */
     @Override
     public void save (Company company) {
+        Transaction transaction = null;
         try(final Session session = sessionFactory.openSession()){
+            transaction = session.beginTransaction();
             session.save(company);
+            transaction.commit();
+        }catch (HibernateException e) {
+            assert transaction != null;
+            e.printStackTrace();
         }
     }
     
     /**
      * @param company
-     * @param id
      */
     @Override
-    public void update (Company company, long id) {
+    public void update (@NotNull Company company) {
+        Transaction transaction = null;
         try(final Session session = sessionFactory.openSession()){
-            Company ent = session.get(Company.class, id);
-            ent.setName(company.getName());
-            session.update(ent);
+            transaction = session.beginTransaction();
+            session.update(company);
+            transaction.commit();
+        }catch (HibernateException e) {
+            assert transaction != null;
+            e.printStackTrace();
         }
     }
     
@@ -96,9 +110,18 @@ public class CompanyService implements Service <Company> {
      */
     @Override
     public void delete (long id) {
+        Transaction transaction = null;
         try(final Session session = sessionFactory.openSession()){
+            transaction = session.beginTransaction();
             Company company = session.get(Company.class, id);
+            for (Trip trip: company.getTrips()) {
+                SingleTonService.getTripService().delete(trip.getId());
+            }
             session.delete(company);
+            transaction.commit();
+        }catch (HibernateException e) {
+            assert transaction.isActive();
+            e.printStackTrace();
         }
     }
     
@@ -107,7 +130,7 @@ public class CompanyService implements Service <Company> {
      * @return
      */
     @Override
-    public String toString (Company company) {
+    public String toString (@NotNull Company company) {
         return "Company{ " +
                 "id= " + company.getId() +
                 ", name= '" + company.getName() + '\'' +

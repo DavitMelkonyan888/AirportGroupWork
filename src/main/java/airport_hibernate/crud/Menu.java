@@ -27,12 +27,29 @@ public class Menu {
         System.out.println("Press 5  For Previous Menu");
         System.out.print("Type Your Action Number: ");
     }
+
+    public static void subMenuCompaniesUpdate(){
+        System.out.println("Press 1  To Change Name");
+        System.out.println("Press 2  For Previous Menu");
+        System.out.print("Type Your Action Number: ");
+    }
     
-    public static void subMenuPassengersUpdate(){
+    public static void
+    subMenuPassengersUpdate(){
         System.out.println("Press 1  To Change Phone");
         System.out.println("Press 2  To Change Address");
         System.out.println("Press 3  To Register New Trip");
         System.out.println("Press 4  To Cancel Trip");
+        System.out.println("press 5  To Change Passenger");
+        System.out.println("Press 6  For Previous Menu");
+        System.out.print("Type Your Action Number: ");
+    }
+
+    public static void subMenuTripsUpdate(){
+        System.out.println("Press 1  To Change Town From");
+        System.out.println("Press 2  To Change Town To");
+        System.out.println("Press 3  To Change Time Out");
+        System.out.println("Press 4  To Change Time In");
         System.out.println("Press 5  For Previous Menu");
         System.out.print("Type Your Action Number: ");
     }
@@ -45,11 +62,7 @@ public class Menu {
         System.out.print("Type Your Action Number: ");
     }
     
-    public static void subMenuCompaniesUpdate(){
-        System.out.println("Press 1  To Change Name");
-        System.out.println("Press 2  For Previous Menu");
-        System.out.print("Type Your Action Number: ");
-    }
+
     
     public static void subMenuTripsRead(){
         System.out.println("Press 1  To Get By Id");
@@ -61,14 +74,7 @@ public class Menu {
         System.out.print("Type Your Action Number: ");
     }
     
-    public static void subMenuTripsUpdate(){
-        System.out.println("Press 1  To Change Town From");
-        System.out.println("Press 2  To Change Town To");
-        System.out.println("Press 3  To Change Time Out");
-        System.out.println("Press 4  To Change Time In");
-        System.out.println("Press 5  For Previous Menu");
-        System.out.print("Type Your Action Number: ");
-    }
+
     
     public static void subMenuCreate(){
         System.out.println("Press 1  To Add New Row");

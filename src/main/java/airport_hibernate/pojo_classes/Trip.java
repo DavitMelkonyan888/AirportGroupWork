@@ -23,6 +23,9 @@ public class Trip {
     private Timestamp         timeOut;
     @Column ( name = "time_in" )
     private Timestamp         timeIn;
+
+
+
     @OneToMany ( mappedBy = "trip" )
     private List <PassInTrip> passInTrips;
     
@@ -83,5 +86,13 @@ public class Trip {
     
     public void setTimeIn (Timestamp timeIn) {
         this.timeIn = timeIn;
+    }
+
+    public List<PassInTrip> getPassInTrips() {
+        return passInTrips;
+    }
+
+    public void setPassInTrips(List<PassInTrip> passInTrips) {
+        this.passInTrips = passInTrips;
     }
 }

@@ -17,10 +17,20 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Validation {
+
+    private static Validation validation;
+
+    private Validation(){}
+
+    public static Validation getInstance() {
+        if (validation == null){
+            validation = new Validation();
+        }
+        return validation;
+    }
+
     
-    private final static SessionFactory sessionFactory = getSessionFactory();
-    
-    public static int getValidIntForSwitch(final int max){
+    public int getValidIntForSwitch(final int max){
         String  regex   = "\\d+";
         Scanner scanner = new Scanner(System.in);
         String  str = scanner.next();
@@ -33,29 +43,9 @@ public class Validation {
         System.out.println();
         return Integer.parseInt(str);
     }
+
     
-    public static boolean isValidCompanyId(final long id){
-        final Session session = sessionFactory.openSession();
-        Company company = session.get(Company.class, id);
-        session.close();
-        return company != null;
-    }
-    
-    public static boolean isValidTripId(final long id){
-        final Session session = sessionFactory.openSession();
-        Trip trip = session.get(Trip.class, id);
-        session.close();
-        return trip != null;
-    }
-    
-    public static boolean isValidPassengerId(final long id){
-        final Session session = sessionFactory.openSession();
-        Passenger passenger = session.get(Passenger.class, id);
-        session.close();
-        return passenger != null;
-    }
-    
-    public static long getValidPassengerId(){
+    public long getValidPassengerId(){
         String  regex   = "\\d+";
         long id = -1;
         String str;
@@ -65,7 +55,7 @@ public class Validation {
         if (str.matches(regex)){
             id = Integer.parseInt(str);
         }
-        while(!str.matches(regex) || !isValidPassengerId(id)){
+        while(!str.matches(regex)){
             System.out.println("\nInvalid Id Please Try Again\n");
             System.out.print("Enter Passenger Id: ");
             str = scanner.next();
@@ -76,7 +66,7 @@ public class Validation {
         return id;
     }
     
-    public static long getValidCompanyId(){
+    public long getValidCompanyId(){
         String  regex   = "\\d+";
         long id = -1;
         String str;
@@ -86,7 +76,7 @@ public class Validation {
         if (str.matches(regex)){
             id = Integer.parseInt(str);
         }
-        while(!str.matches(regex) || !isValidCompanyId(id)){
+        while(!str.matches(regex) ){
             System.out.println("\nInvalid Id Please Try Again\n");
             System.out.print("Enter Company Id: ");
             str = scanner.next();
@@ -97,7 +87,7 @@ public class Validation {
         return id;
     }
     
-    public static long getValidTripId(){
+    public long getValidTripId(){
         String  regex   = "\\d+";
         long id = -1;
         String str;
@@ -105,43 +95,44 @@ public class Validation {
         System.out.print("Enter Trip Id: ");
         str = scanner.next();
         if (str.matches(regex)){
-            id = Integer.parseInt(str);
+            id = Long.parseLong(str);
         }
-        while(!str.matches(regex) || !isValidTripId(id)){
+        while(!str.matches(regex)){
             System.out.println("\nInvalid Id Please Try Again\n");
             System.out.print("Enter Trip Id: ");
             str = scanner.next();
             if (str.matches(regex)){
-                id = Integer.parseInt(str);
+                id = Long.parseLong(str);
             }
         }
         return id;
     }
     
-    public static <T> @NotNull T getValidPOJOById(@NotNull T obj, @NotNull Service<T> service){
+    public <T>  T getValidPOJOById(@NotNull T obj, @NotNull Service<T> service){
         String  regex   = "\\d+";
         long id = -1;
         String str;
         Scanner scanner = new Scanner(System.in);
+        T temp = null;
         System.out.print("Enter " + obj.getClass().getSimpleName() + " Id: ");
         str = scanner.next();
         if (str.matches(regex)){
             id = Integer.parseInt(str);
-            obj = service.getById(id);
+            temp = service.getById(id);
         }
-        while(!str.matches(regex) || obj == null){
+        while(!str.matches(regex) || temp == null){
             System.out.println("\nInvalid Id Please Try Again\n");
             System.out.print("Enter " + obj.getClass().getSimpleName() + " Id: ");
             str = scanner.next();
             if (str.matches(regex)){
                 id = Integer.parseInt(str);
-                obj = service.getById(id);
+                temp = service.getById(id);
             }
         }
-        return obj;
+        return temp;
     }
     
-    public static @NotNull Company getValidCompany(){
+    public @NotNull Company getValidCompany(){
         Scanner scanner = new Scanner(System.in);
         Company company = new Company();
         String  regex   = "\\d{4}-\\d{2}-\\d{2}";
@@ -158,7 +149,7 @@ public class Validation {
         return company;
     }
     
-    public static <T> Set <T> getObj(@NotNull Service<T> service){
+    public <T> Set<T> getObj(@NotNull Service<T> service){
 
         Scanner scInt = new Scanner(System.in);
         System.out.print("ENTER LIMIT ? > 0 -> ");
@@ -167,20 +158,42 @@ public class Validation {
         final int offset = scInt.nextInt();
         final String sortColumn;
 
-
         if (instanceOfServices(service) == 1)
-           sortColumn = columnNameT(printTableTripColumns());
+           sortColumn = columnNameC(printCompanyTableColumns());
 
         else if (instanceOfServices(service) == 2) {
             sortColumn = columnNameP(printPassengerTablesColumns());
 
         } else {
-            sortColumn = columnNameC(printCompanyTableColumns());
+            sortColumn = columnNameT(printTableTripColumns());
         }
         return service.get(limit, offset, sortColumn);
     }
 
-    private static int printPassengerTablesColumns() {
+    public String validPhoneNumber(){
+        Scanner scStr = new Scanner(System.in);
+        String  regex   = "\\d{3}-\\d{3}-\\d{4}";
+        System.out.println("ENTER PHONE NUMBER XXX-XXX-XXXX");
+        System.out.print("                  ");
+        String phoneNumber = scStr.next();
+        while (!phoneNumber.matches(regex)) {
+            System.out.println("ENTER PHONE NUMBER XXX-XXX-XXXX");
+            System.out.print("                  ");
+            phoneNumber = scStr.next();
+        }
+        return phoneNumber;
+    }
+
+    public Address validAddress(){
+        Scanner scStr = new Scanner(System.in);
+        System.out.print("ENTER COUNTRY -> ");
+        String country = scStr.next();
+        System.out.print("ENTER CITY -> ");
+        String city = scStr.next();
+        return new Address(country, city);
+    }
+
+    private int printPassengerTablesColumns() {
 
         System.out.println("1. id");
         System.out.println("2. city");
@@ -189,21 +202,11 @@ public class Validation {
         System.out.println("5. phone");
         System.out.print("ENTER COLUMN CAME -> ");
 
-        String  regex   = "\\d+";
-        Scanner scanner = new Scanner(System.in);
-        String  str = scanner.next();
-        while(!str.matches(regex) ||  Integer.parseInt(str) > 5 || Integer.parseInt(str) < 1){
-            System.out.println("\nInvalid Input Please Try Again\n");
-            System.out.print("Type Your Action Number: ");
-            str = scanner.next();
-
-        }
-        System.out.println();
-        return Integer.parseInt(str);
+       return getValidIntForSwitch(5);
 
     }
 
-    public static int  printTableTripColumns(){
+    public int  printTableTripColumns(){
         System.out.println("1. company_id");
         System.out.println("2. trip_id");
         System.out.println("3. time_in");
@@ -212,93 +215,70 @@ public class Validation {
         System.out.println("6. town_to");
         System.out.print("ENTER COLUMN CAME -> ");
 
-        String  regex   = "\\d+";
-        Scanner scanner = new Scanner(System.in);
-        String  str = scanner.next();
-        while(!str.matches(regex) ||  Integer.parseInt(str) > 6 || Integer.parseInt(str) < 1){
-            System.out.println("\nInvalid Input Please Try Again\n");
-            System.out.print("Type Your Action Number: ");
-            str = scanner.next();
-
-        }
-        System.out.println();
-        return Integer.parseInt(str);
+        return getValidIntForSwitch(6);
 
 
     }
 
-    private static int printCompanyTableColumns() {
+    private int printCompanyTableColumns() {
         System.out.println("1. founding_date");
         System.out.println("2. id");
         System.out.println("3. name");
         System.out.print("ENTER COLUMN CAME -> ");
 
-        String  regex   = "\\d+";
-        Scanner scanner = new Scanner(System.in);
-        String  str = scanner.next();
-        while(!str.matches(regex) ||  Integer.parseInt(str) > 6 || Integer.parseInt(str) < 1){
-            System.out.println("\nInvalid Input Please Try Again\n");
-            System.out.print("Type Your Action Number: ");
-            str = scanner.next();
-
-        }
-        System.out.println();
-        return Integer.parseInt(str);
+       return getValidIntForSwitch(3);
 
     }
 
-    private static <T> int instanceOfServices(Service<T> service) {
-        if (service instanceof CompanyService)
-            return 1;
-        if (service instanceof PassengerService)
-            return 2;
-        return 3;
+    private <T> int instanceOfServices(Service<T> service) {
+
+        return service instanceof CompanyService ? 1 : service instanceof PassengerService ? 2: 3;
 
     }
 
-    @Contract(pure = true)
-    private static @NotNull String columnNameT(final int columnNumber) {
+
+    private  String columnNameT(final int columnNumber) {
         switch (columnNumber){
             case 1:
-                return "company_id";
+                return "company";
             case 2:
-                return "trip_id";
+                return "id";
             case 3:
-                return "time_in";
+                return "timeIn";
             case 4:
-                return "time_out";
+                return "timeOut";
             case 5:
-                return "town_from";
+                return "townFrom";
             case 6:
-                return "town_to";
+                return "townTo";
             default:
                 throw new IllegalArgumentException("CHGITEM VONC ES KARACE ANES VOR EXCEPTION QCI, MALADEC :)");
         }
 
     }
-    @Contract(pure = true)
-    private static @NotNull String columnNameP(final int columnNumber){
+
+    private  String columnNameP(final int columnNumber){
         switch (columnNumber){
             case 1:
                 return "id";
             case 2:
-                return "city";
+                return "address.city";
             case 3:
-                return "country";
+                return "address.country";
             case 4:
                 return "name";
             case 5:
                 return "phone";
             default:
-                throw new IllegalArgumentException("CHGITEM VONC ES KARACE ANES VOR EXCEPTION QCI, MALADEC :)");
+                throw new IllegalArgumentException("CHGITEM VONC ES KARACE ANES VOR EXCEPTION QCI: MALADEC :)");
         }
     }
 
-    @Contract(pure = true)
-    private static @NotNull String columnNameC(final int columnName){
+
+    private String columnNameC(final int columnName){
         switch (columnName) {
             case 1:
-                return "founding_date";
+                return "foundingDate";
             case 2:
                 return "id";
             case 3:

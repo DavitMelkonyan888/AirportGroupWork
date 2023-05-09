@@ -17,6 +17,7 @@ public class Company {
     private String           name;
     @Column ( name = "founding_date" )
     private Date             foundingDate;
+
     @OneToMany ( mappedBy = "company" )
     private List <Trip> trips;
     
@@ -25,6 +26,7 @@ public class Company {
     public Company (String name, Date foundingDate) {
         this.name = name;
         this.foundingDate = foundingDate;
+
     }
     
     public int getId () {
@@ -50,4 +52,13 @@ public class Company {
     public void setFoundingDate (Date foundingDate) {
         this.foundingDate = foundingDate;
     }
+
+    public List<Trip> getTrips() {
+        return trips;
+    }
+
+    public void setTrips(List<Trip> trips) {
+        this.trips = trips;
+    }
+
 }

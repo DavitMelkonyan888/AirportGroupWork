@@ -1,6 +1,8 @@
 package airport_hibernate.service.service_classes;
 
 import static airport_hibernate.connection_to_db.Connection.getSessionFactory;
+
+import airport_hibernate.pojo_classes.Address;
 import airport_hibernate.pojo_classes.PassInTrip;
 import airport_hibernate.pojo_classes.Passenger;
 import airport_hibernate.pojo_classes.Trip;
@@ -82,11 +84,11 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     }
     
     /**
-     * @param id id
+     * @param id
      * @return Passenger
      */
     @Override
-    public Passenger getById (final long id) {
+    public  Passenger getById (final long id) {
         Passenger passenger;
         try(final Session session = sessionFactory.openSession()){
             passenger = session.get(Passenger.class, id);
@@ -113,10 +115,10 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      * @return
      */
     @Override
-    public Set <Passenger> get (final int limit, final int offset, final String sortBy) {
-        Set<Passenger> passengers;
+    public Set <Passenger> get (final int offset, final int limit, final String sortBy) {
+        Set<Passenger> passengers = null;
         try(final Session session = sessionFactory.openSession()) {
-            passengers = new LinkedHashSet <>(session.createQuery("from Passenger ORDER BY " + sortBy)
+            passengers = new LinkedHashSet <>(session.createQuery("from Passenger order by " + sortBy)
                     .setFirstResult(offset).setMaxResults(limit).getResultList());
         }
         return passengers;
@@ -141,17 +143,13 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     
     /**
      * @param passenger
-     * @param id
      */
     @Override
-    public void update (final @NotNull Passenger passenger, final long id) {
+    public void update (final @NotNull Passenger passenger) {
         Transaction transaction = null;
         try(Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            Passenger ent = session.get(Passenger.class, id);
-            ent.setAddress(passenger.getAddress());
-            ent.setPhone(passenger.getPhone());
-            session.update(ent);
+            session.update(passenger);
             transaction.commit();
         }catch (HibernateException e) {
             assert transaction != null;
@@ -169,6 +167,9 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
         try(Session session = sessionFactory.openSession()){
             transaction = session.beginTransaction();
             Passenger passenger = session.get(Passenger.class, id);
+            for (PassInTrip pit: passenger.getPassInTrips()) {
+                session.delete(pit);
+            }
             session.delete(passenger);
             transaction.commit();
         }catch (HibernateException e) {
@@ -183,7 +184,7 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
      * @return
      */
     @Override
-    public String toString (final @NotNull Passenger passenger) {
+    public String toString (final Passenger passenger) {
         return "Passenger{ " +
                 "id= " + passenger.getId() +
                 ", name= '" + passenger.getName() + '\'' +
@@ -192,4 +193,37 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
                                           + passenger.getAddress().getCity() +'\'' +
                 " } }";
     }
+
+    public void updatePassengersPhone(@NotNull final String phone, final long id) {
+        Passenger passenger = getById(id);
+        if (passenger != null) {
+            passenger.setPhone(phone);
+            update(passenger);
+        }else {
+            System.out.println("THERE IS NOT PASSENGER WITH ID = " + id);
+        }
+    }
+
+    public void updatePassengersAddress(@NotNull final Address address, final long id) {
+        Passenger passenger = getById(id);
+        if (passenger != null) {
+            passenger.setAddress(address);
+            update(passenger);
+        }else {
+            System.out.println("THERE IS NOT PASSENGER WITH ID = " + id);
+        }
+    }
+
+    public void updatePassenger(@NotNull final Passenger passenger, final long id) {
+        Passenger passenger1 = getById(id);
+        if (passenger1 != null){
+            passenger1 = passenger;
+            passenger1.setId(id);
+            update(passenger1);
+        }else {
+            System.out.println("THERE IS NOT PASSENGER WITH ID = " + id);
+        }
+    }
+
+
 }

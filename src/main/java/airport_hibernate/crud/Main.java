@@ -10,15 +10,18 @@ import airport_hibernate.service.service_classes.CompanyService;
 import airport_hibernate.service.service_classes.PassengerService;
 import airport_hibernate.service.service_classes.TripService;
 import airport_hibernate.service.single_tone_objects.SingleTonService;
+import airport_hibernate.validation.Validation;
 import org.hibernate.SessionFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Scanner;
 
+
 import static airport_hibernate.validation.Validation.*;
 
 public class Main {
+
     
     private enum Services{
         PASSENGER, COMPANY, TRIP
@@ -28,7 +31,7 @@ public class Main {
         int v;
         do {
             Menu.subMenu();
-            v = getValidIntForSwitch(5);
+            v = Validation.getInstance().getValidIntForSwitch(5);
             switch (v) {
                 case 1 -> {
                     switch (service) {
@@ -59,6 +62,7 @@ public class Main {
                     }
                 }
                 case 5 -> Menu.prevMenu();
+                default -> System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while(v != 5);
     }
@@ -68,37 +72,56 @@ public class Main {
         int v;
         do {
             Menu.subMenuPassengersRead();
-            v = getValidIntForSwitch(5);
+            v = Validation.getInstance().getValidIntForSwitch(5);
             switch (v) {
-                case 1 ->
-                        System.out.println(passengerService.toString(getValidPOJOById(passenger, passengerService)) + '\n');
-                case 2 -> printList(passengerService.getAll(), passengerService);
-                case 3 -> printList(getObj(passengerService), passengerService);
-                case 4 -> {
-                    long tripId = getValidTripId();
+                case 1:
+                    System.out.println(passengerService.toString(Validation.getInstance().getValidPOJOById(passenger, passengerService)) + '\n');
+                    break;
+                case 2:
+                    printList(passengerService.getAll(), passengerService);
+                    break;
+                case 3:
+                    printList(Validation.getInstance().getObj(passengerService), passengerService);
+                    break;
+                case 4:
+                    long tripId =Validation.getInstance().getValidTripId();
                     printList(passengerService.getPassengersOfTrip(tripId), passengerService);
-                }
-                case 5 -> Menu.prevMenu();
+                    break;
+                case 5:
+                    Menu.prevMenu();
+                    break;
+                default:
+                    System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 5);
     }
     
     private static void passengerUpdate(PassengerService passengerService){
+
         int v;
         do {
             Menu.subMenuPassengersUpdate();
-            v = getValidIntForSwitch(5);
+            v = Validation.getInstance().getValidIntForSwitch(6);
             switch (v) {
                 case 1:
+                    passengerService.updatePassengersPhone(Validation.getInstance().validPhoneNumber(), Validation.getInstance().getValidPassengerId());
                     break;
                 case 2:
+                    passengerService.updatePassengersAddress(Validation.getInstance().validAddress() , Validation.getInstance().getValidPassengerId());
                     break;
                 case 3:
+                   //passengerService.registerTrip();
                     break;
                 case 4:
+                    //passengerService.updatePassenger();
                     break;
                 case 5:
+                    break;
+                case 6:
                     Menu.prevMenu();
+                    break;
+                default:
+                    System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 5);
     }
@@ -108,19 +131,22 @@ public class Main {
         int v;
         do {
             Menu.subMenuCompaniesRead();
-            v = getValidIntForSwitch(4);
+            v = Validation.getInstance().getValidIntForSwitch(4);
             switch (v) {
                 case 1:
-                    System.out.println(companyService.toString(getValidPOJOById(company, companyService)) + '\n');
+                    System.out.println(companyService.toString(Validation.getInstance().getValidPOJOById(company, companyService)) + '\n');
                     break;
                 case 2:
                     printList(companyService.getAll(), companyService);
                     break;
                 case 3:
-                    printList(getObj(companyService), companyService);
+                    printList(Validation.getInstance().getObj(companyService), companyService);
                     break;
                 case 4:
                     Menu.prevMenu();
+                    break;
+                default:
+                    System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 4);
     }
@@ -129,12 +155,16 @@ public class Main {
         int v;
         do {
             Menu.subMenuCompaniesUpdate();
-            v = getValidIntForSwitch(2);
+            v = Validation.getInstance().getValidIntForSwitch(4);
             switch (v) {
                 case 1:
+
                     break;
                 case 2:
                     Menu.prevMenu();
+                    break;
+                default:
+                    System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 2);
     }
@@ -144,16 +174,16 @@ public class Main {
         int v;
         do {
             Menu.subMenuTripsRead();
-            v = getValidIntForSwitch(6);
+            v = Validation.getInstance().getValidIntForSwitch(6);
             switch (v) {
                 case 1:
-                    System.out.println(tripService.toString(getValidPOJOById(trip, tripService)) + '\n');
+                    System.out.println(tripService.toString(Validation.getInstance().getValidPOJOById(trip, tripService)) + '\n');
                     break;
                 case 2:
                     printList(tripService.getAll(), tripService);
                     break;
                 case 3:
-                    printList(getObj(tripService), tripService);
+                    printList(Validation.getInstance().getObj(tripService), tripService);
                     break;
                 case 4:
                     printList(tripService.getTripsFrom(getTown()), tripService);
@@ -163,6 +193,9 @@ public class Main {
                     break;
                 case 6:
                     Menu.prevMenu();
+                    break;
+                default:
+                    System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 6);
     }
@@ -171,7 +204,7 @@ public class Main {
         int v;
         do {
             Menu.subMenuTripsUpdate();
-            v = getValidIntForSwitch(5);
+            v = Validation.getInstance().getValidIntForSwitch(5);
             switch (v) {
                 case 1:
                     break;
@@ -183,85 +216,94 @@ public class Main {
                     break;
                 case 5:
                     Menu.prevMenu();
+                    break;
+                default:
+                    System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 5);
     }
     
-    private static <T extends Service> void serviceCreate(T service){
+    private static  <T extends Service> void serviceCreate(T service){
         int v;
         do {
             Menu.subMenuCreate();
-            v = getValidIntForSwitch(2);
+            v = Validation.getInstance().getValidIntForSwitch(2);
             switch (v) {
                 case 1:
                     addRow(service);
                     break;
                 case 2:
                     Menu.prevMenu();
+                    break;
+                default:
+                    System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 2);
     }
     
-    private static <T extends Service> void addRow(T service){
+    private static  <T extends Service> void addRow(T service){
         if (service instanceof CompanyService){
-            long id = getValidCompanyId();
-            service.delete(id);
+            long id = Validation.getInstance().getValidCompanyId();
+            service.save(id);
         } else if (service instanceof PassengerService){
-            long id = getValidPassengerId();
+            long id = Validation.getInstance().getValidPassengerId();
             service.delete(id);
         } else {
-            long id = getValidTripId();
+            long id = Validation.getInstance().getValidTripId();
             service.delete(id);
         }
     }
     
-    private static <T extends Service> void serviceDelete(T service){
+    private static  <T extends Service> void serviceDelete(T service){
         int v;
         do {
             Menu.subMenuDelete();
-            v = getValidIntForSwitch(2);
+            v = Validation.getInstance().getValidIntForSwitch(2);
             switch (v) {
                 case 1:
                     deleteRow(service);
                     break;
                 case 2:
                     Menu.prevMenu();
+                    break;
+                default:
+                    System.out.println("\nInvalid Input Please Try Again\n");
             }
         } while (v != 2);
     }
     
-    private static <T extends Service> void deleteRow(T service){
+    private static  <T extends Service> void deleteRow(T service){
         if (service instanceof CompanyService){
-            long id = getValidCompanyId();
+            long id = Validation.getInstance().getValidCompanyId();
             // checking that company has reference to the another table has prints message
             // do you want to delete another table row where company id is referring to...
             service.delete(id);
         } else if (service instanceof PassengerService){
-            long id = getValidPassengerId();
+            long id = Validation.getInstance().getValidPassengerId();
             service.delete(id);
         } else {
-            long id = getValidTripId();
+            long id = Validation.getInstance().getValidTripId();
             service.delete(id);
         }
     }
     
     public static void main (String[] args) {
-        try (SessionFactory ignored = getSessionFactory(); Scanner ignored1 = new Scanner(System.in)) {
+        try (SessionFactory ignored = getSessionFactory()) {
             int v;
             do {
                 Menu.mainMenu();
-                v = getValidIntForSwitch(5);
+                v = Validation.getInstance().getValidIntForSwitch(4);
                 switch (v) {
                     case 1 -> crud(Services.PASSENGER);
                     case 2 -> crud(Services.COMPANY);
                     case 3 -> crud(Services.TRIP);
-                    //case 4 -> clear();
                     case 4 -> System.out.println("Exited Successfully");
+                    default -> System.out.println("\nInvalid Input Please Try Again\n");
                 }
             } while (v != 4);
         }
     }
-    private static <T> void printList(@NotNull Collection<? extends T> list, Service service){
+    private static  <T> void printList(@NotNull Collection<? extends T> list, Service service){
         for (T obj  : list){
             System.out.println(service.toString(obj));
         }
@@ -271,14 +313,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String town = scanner.next();
         return town;
-    }
-    
-    private static void clear(){
-        try {
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        } catch (Exception ex) {
-            System.out.println("Failed to clear terminal screen: " + ex.getMessage());
-        }
     }
 }
 
