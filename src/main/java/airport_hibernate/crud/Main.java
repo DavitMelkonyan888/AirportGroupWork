@@ -6,6 +6,7 @@ import airport_hibernate.pojo_classes.Company;
 import airport_hibernate.pojo_classes.Passenger;
 import airport_hibernate.pojo_classes.Trip;
 import airport_hibernate.service.abstract_service.Service;
+import airport_hibernate.service.create_pojo_objects.CreateObjects;
 import airport_hibernate.service.service_classes.CompanyService;
 import airport_hibernate.service.service_classes.PassengerService;
 import airport_hibernate.service.service_classes.TripService;
@@ -107,15 +108,16 @@ public class Main {
                     passengerService.updatePassengersPhone(Validation.getInstance().validPhoneNumber(), Validation.getInstance().getValidPassengerId());
                     break;
                 case 2:
-                    passengerService.updatePassengersAddress(Validation.getInstance().validAddress() , Validation.getInstance().getValidPassengerId());
+                    passengerService.updatePassengersAddress(Validation.getInstance().validAddress(), Validation.getInstance().getValidPassengerId());
                     break;
                 case 3:
-                   //passengerService.registerTrip();
+                    passengerService.registerTrip(CreateObjects.getInstance().createObjTrip(), CreateObjects.getInstance().createObjPass(), Validation.getInstance().validTimeStamp(), getTown());
                     break;
                 case 4:
-                    //passengerService.updatePassenger();
+                    passengerService.cancelTrip(Validation.getInstance().getValidPassengerId(), Validation.getInstance().getValidTripId());
                     break;
                 case 5:
+                    passengerService.updatePassenger(CreateObjects.getInstance().createObjPass(), Validation.getInstance().getValidPassengerId());
                     break;
                 case 6:
                     Menu.prevMenu();
@@ -158,7 +160,7 @@ public class Main {
             v = Validation.getInstance().getValidIntForSwitch(4);
             switch (v) {
                 case 1:
-
+                    companyService.update(CreateObjects.getInstance().createObjComp());
                     break;
                 case 2:
                     Menu.prevMenu();
@@ -204,23 +206,21 @@ public class Main {
         int v;
         do {
             Menu.subMenuTripsUpdate();
-            v = Validation.getInstance().getValidIntForSwitch(5);
+            v = Validation.getInstance().getValidIntForSwitch(3);
             switch (v) {
                 case 1:
+                    tripService.changeTimeIn(Validation.getInstance().getValidTripId());
                     break;
                 case 2:
+                    tripService.changeTimeOut(Validation.getInstance().getValidTripId());
                     break;
                 case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
                     Menu.prevMenu();
                     break;
                 default:
                     System.out.println("\nInvalid Input Please Try Again\n");
             }
-        } while (v != 5);
+        } while (v != 3);
     }
     
     private static  <T extends Service> void serviceCreate(T service){
@@ -243,14 +243,11 @@ public class Main {
     
     private static  <T extends Service> void addRow(T service){
         if (service instanceof CompanyService){
-            long id = Validation.getInstance().getValidCompanyId();
-            service.save(id);
+            service.save(CreateObjects.getInstance().createObjComp());
         } else if (service instanceof PassengerService){
-            long id = Validation.getInstance().getValidPassengerId();
-            service.delete(id);
+            service.save(CreateObjects.getInstance().createObjPass());
         } else {
-            long id = Validation.getInstance().getValidTripId();
-            service.delete(id);
+            service.save(CreateObjects.getInstance().createObjTrip());
         }
     }
     
@@ -275,8 +272,6 @@ public class Main {
     private static  <T extends Service> void deleteRow(T service){
         if (service instanceof CompanyService){
             long id = Validation.getInstance().getValidCompanyId();
-            // checking that company has reference to the another table has prints message
-            // do you want to delete another table row where company id is referring to...
             service.delete(id);
         } else if (service instanceof PassengerService){
             long id = Validation.getInstance().getValidPassengerId();
