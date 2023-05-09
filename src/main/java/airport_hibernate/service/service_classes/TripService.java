@@ -5,6 +5,7 @@ import static airport_hibernate.service.single_tone_objects.SingleTonService.*;
 
 import airport_hibernate.pojo_classes.PassInTrip;
 import airport_hibernate.pojo_classes.Trip;
+import airport_hibernate.validation.Validation;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -83,14 +84,19 @@ public class TripService implements airport_hibernate.service.abstract_service.T
      */
     @Override
     public void save (final Trip trip) {
+        Transaction transaction = null;
         try(final Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             session.save(trip);
+            transaction.commit();
+        }catch (HibernateException e) {
+            assert transaction != null;
+            e.printStackTrace();
         }
     }
     
     /**
      * @param trip
-     * @param id
      */
     @Override
     public void update (final @NotNull Trip trip) {
@@ -170,6 +176,23 @@ public class TripService implements airport_hibernate.service.abstract_service.T
                     .getResultList();
         }
         return resultList;
+    }
+
+
+    public void changeTimeIn(final long id){
+        Trip trip = getById(id);
+        if (trip != null) {
+            trip.setTimeIn(Validation.getInstance().validTimeStamp());
+            update(trip);
+        }
+    }
+
+    public void changeTimeOut(final long id) {
+        Trip trip = getById(id);
+        if (trip != null) {
+            trip.setTimeOut(Validation.getInstance().validTimeStamp());
+            update(trip);
+        }
     }
 
 
