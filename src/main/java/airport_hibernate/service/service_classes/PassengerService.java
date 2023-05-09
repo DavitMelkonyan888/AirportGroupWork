@@ -217,8 +217,8 @@ public class PassengerService implements airport_hibernate.service.abstract_serv
     public void updatePassenger(@NotNull final Passenger passenger, final long id) {
         Passenger passenger1 = getById(id);
         if (passenger1 != null){
-            passenger1 = passenger;
-            passenger1.setId(id);
+            passenger1.setAddress(passenger.getAddress());
+            passenger1.setPhone(passenger.getPhone());
             update(passenger1);
         }else {
             System.out.println("THERE IS NOT PASSENGER WITH ID = " + id);
