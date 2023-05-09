@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -182,6 +183,18 @@ public class Validation {
             phoneNumber = scStr.next();
         }
         return phoneNumber;
+    }
+
+    public Timestamp validTimeStamp() {
+        Scanner scStr = new Scanner(System.in);
+        String regex =  "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}";
+        System.out.println("ENTER TIMESTAMP yyyy-mm-dd hh:mm:ss");
+        String time = scStr.nextLine();
+        while (!time.matches(regex)) {
+            System.out.println("ENTER TIMESTAMP yyyy-mm-dd hh:mm:ss");
+            time = scStr.nextLine();
+        }
+        return Timestamp.valueOf(time);
     }
 
     public Address validAddress(){
